@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 
 from src.agents.prompts import ADVISOR_SYSTEM
-from src.common import get_logger
+from src.common import abs_url, get_logger
 
 log = get_logger()
 
@@ -56,7 +56,7 @@ def _extra_refs(direction: str, kb, top_k: int = 3) -> list[dict]:
                 continue
             seen.add(key)
             out.append({"id": f"A{len(out) + 1}", "doc_no": h.get("doc_no"), "title": h.get("title"),
-                        "url": h.get("url"), "channel": h.get("channel"), "date": h.get("date"),
+                        "url": abs_url(h.get("url")), "channel": h.get("channel"), "date": h.get("date"),
                         "excerpt": (h.get("text") or "")[:200]})
         if len(out) >= 6:
             break

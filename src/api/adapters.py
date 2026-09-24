@@ -45,6 +45,8 @@ def _enrich_plan(d: dict) -> dict:
             f["formula"] = lab["formula"]
     for pol in (dp.get("policies") or []):
         pol["url"] = abs_url(pol.get("url"))
+    for pol in (lin.get("policies") or []):          # 顶层回退时的政策也要补全
+        pol["url"] = abs_url(pol.get("url"))
     green = ((lin.get("ai_process") or {}).get("green") or {})
     note = green.get("ai_note")
     if note:
@@ -163,13 +165,23 @@ def _plan_file(code: str, year: int, direction: str) -> Path | None:
     return None
 
 
+def _abs_opinion_refs(op: dict | None) -> dict | None:
+    """意见书的参考链接统一补全为绝对链接（含命中缓存的历史数据）。"""
+    if not op:
+        return op
+    for key in ("refs", "extra_refs"):
+        for r in (op.get(key) or []):
+            r["url"] = abs_url(r.get("url"))
+    return op
+
+
 def plan_opinion(code: str, year: int, direction: str, refresh: bool = False) -> dict | None:
     """合规税务意见：命中缓存直接返回；否则（重新）生成并写回方案文件。"""
     d = load_plan(code, year, direction)
     if not d:
         return None
     if d.get("opinion") and not refresh:
-        return d["opinion"]
+        return _abs_opinion_refs(d["opinion"])
     from src.agents.advisor import build_opinion
     kb = None
     try:
@@ -177,7 +189,7 @@ def plan_opinion(code: str, year: int, direction: str, refresh: bool = False) ->
         kb = get_kb()
     except Exception:  # noqa: BLE001
         kb = None
-    opinion = build_opinion(d, kb=kb, use_llm=True)
+    opinion = _abs_opinion_refs(build_opinion(d, kb=kb, use_llm=True))
     d["opinion"] = opinion
     fp = _plan_file(code, year, direction)
     if fp is not None:
@@ -288,15 +300,50 @@ def meta_stats() -> dict:
 
 # ---------------------------------------------------------------- kb
 
+_CASE_URL_CACHE: dict = {"loaded": False, "map": {}}
+
+
+def _case_url_map() -> dict:
+    """案例标题 → 原文链接（从 cases_index.csv 抽取，避免重建索引）。
+
+    案例 chunk 的 `url` 字段为空，真实网址存放在 `cases_index.csv` 的 `source`
+    （形如 `[税屋网](https://...)`）。此处在读取时按标题回填，无需重跑向量化。
+    """
+    if _CASE_URL_CACHE["loaded"]:
+        return _CASE_URL_CACHE["map"]
+    import re
+    m: dict[str, str] = {}
+    try:
+        csv = Path(CONFIG["paths"]["knowledge"]) / "cases" / "cases_index.csv"
+        if csv.exists():
+            import pandas as pd
+            for r in pd.read_csv(csv).itertuples(index=False):
+                title = str(getattr(r, "title", "") or "").strip()
+                hit = re.search(r"https?://[^\s)\]]+", str(getattr(r, "source", "") or ""))
+                if title and hit:
+                    m.setdefault(title, hit.group(0))
+    except Exception as exc:  # noqa: BLE001 读取失败不阻断检索
+        log.warning("案例链接表加载失败：%s", str(exc)[:120])
+    _CASE_URL_CACHE.update({"loaded": True, "map": m})
+    return m
+
+
 def kb_search(q: str, corpus: str = "policy", top_k: int = 5) -> list[dict]:
     """知识库检索，返回精简后的命中（含绝对链接与 300 字摘要）。"""
     from src.rag.store import get_kb
     kb = get_kb()
     hits = kb.search(q, corpus=corpus, top_k=top_k)
-    return [{"title": h.get("title"), "doc_no": h.get("doc_no"), "channel": h.get("channel"),
-             "date": h.get("date"), "score": round(float(h.get("score", 0.0)), 4),
-             "url": abs_url(h.get("url")),
-             "excerpt": (h.get("text") or "")[:300]} for h in hits]
+    cmap = _case_url_map() if corpus == "case" else {}
+    out: list[dict] = []
+    for h in hits:
+        url = abs_url(h.get("url"))
+        if not url and corpus == "case":          # 案例无 url → 按标题回填原文链接
+            url = cmap.get(str(h.get("title") or "").strip(), "")
+        out.append({"title": h.get("title"), "doc_no": h.get("doc_no"),
+                    "channel": h.get("channel"), "date": h.get("date"),
+                    "score": round(float(h.get("score", 0.0)), 4),
+                    "url": url, "excerpt": (h.get("text") or "")[:300]})
+    return out
 
 
 # ---------------------------------------------------------------- evidence

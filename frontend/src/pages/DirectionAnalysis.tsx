@@ -9,6 +9,7 @@ import { PoolRefs } from '../components/PoolRefs'
 import { ErrorState } from '../components/ErrorState'
 import { friendlyError } from '../errors'
 import { useToast } from '../components/Toast'
+import { absUrl } from '../url'
 
 function statusIcon(r: string) { return r === 'DIRECT' ? '✓' : r === 'PROXY' ? '△' : '✕' }
 
@@ -205,8 +206,8 @@ export default function DirectionAnalysis({ code, year, direction }: { code: str
                 <div className="op-title">参考依据</div>
                 {opinion.refs.map((r, i) => (
                   <div key={i} className="fieldmeta">
-                    [{r.id}] {r.url
-                      ? <a href={r.url} target="_blank" rel="noreferrer">{r.doc_no || '（无文号）'} {r.title}</a>
+                    [{r.id}] {absUrl(r.url)
+                      ? <a href={absUrl(r.url)} target="_blank" rel="noreferrer">{r.doc_no || '（无文号）'} {r.title}</a>
                       : <>{r.doc_no || '（无文号）'} {r.title}</>}
                   </div>
                 ))}
@@ -258,8 +259,8 @@ export default function DirectionAnalysis({ code, year, direction }: { code: str
               {(dp.policies || []).map((pol: any) => (
                 <div key={pol.id} className="fieldmeta">
                   [{pol.id}]{" "}
-                  {pol.url
-                    ? <a href={String(pol.url)} target="_blank" rel="noreferrer">{pol.doc_no || '（无文号）'} {pol.title}</a>
+                  {absUrl(pol.url)
+                    ? <a href={absUrl(pol.url)} target="_blank" rel="noreferrer">{pol.doc_no || '（无文号）'} {pol.title}</a>
                     : <>{pol.doc_no || '（无文号）'} {pol.title}</>}
                   （{pol.date}）
                   {pvMap[pol.doc_no || pol.title] && ` [${pvTag[pvMap[pol.doc_no || pol.title]]}]`}

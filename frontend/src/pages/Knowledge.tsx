@@ -4,6 +4,7 @@ import { Modal } from '../components/Modal'
 import { friendlyError } from '../errors'
 import { useToast } from '../components/Toast'
 import { Empty } from '../components/Empty'
+import { absUrl } from '../url'
 
 export default function Knowledge() {
   const [q, setQ] = useState('研发费用加计扣除')
@@ -97,8 +98,8 @@ export default function Knowledge() {
         {hits.map((h, i) => (
           <div key={i} style={{ marginBottom: 10 }}>
             <div>
-              {h.url
-                ? <a href={String(h.url)} target="_blank" rel="noreferrer"><b>{String(h.doc_no || '')}</b> {String(h.title || '')}</a>
+              {absUrl(h.url)
+                ? <a href={absUrl(h.url)} target="_blank" rel="noreferrer"><b>{String(h.doc_no || '')}</b> {String(h.title || '')}</a>
                 : <><b>{String(h.doc_no || '')}</b> {String(h.title || '')}</>}
               <span className="muted">（{String(h.channel || '')} {String(h.date || '')}）</span>
             </div>
