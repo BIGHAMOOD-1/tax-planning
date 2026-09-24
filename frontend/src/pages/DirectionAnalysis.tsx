@@ -7,6 +7,7 @@ import { Skeleton } from '../components/Skeleton'
 import { Term } from '../components/Term'
 import { PoolRefs } from '../components/PoolRefs'
 import { ErrorState } from '../components/ErrorState'
+import { Empty } from '../components/Empty'
 import { friendlyError } from '../errors'
 import { useToast } from '../components/Toast'
 import { absUrl } from '../url'
@@ -44,13 +45,24 @@ function opSteps(steps?: { step: string; detail?: string }[], refMap?: Record<st
 export default function DirectionAnalysis({ code, year, direction }: { code: string; year: number; direction: string }) {
   const [p, setP] = useState<PlanDetail | null>(null)
   const [err, setErr] = useState('')
+  const [notFound, setNotFound] = useState(false)
   const [showAi, setShowAi] = useState(false)
   const [showReview, setShowReview] = useState(false)
   const [opinion, setOpinion] = useState<Opinion | null>(null)
   const [opLoading, setOpLoading] = useState(false)
   const [expandPoints, setExpandPoints] = useState<Record<number, boolean>>({})
   const toast = useToast()
-  useEffect(() => { api.getPlan(code, year, direction).then(setP).catch((e) => setErr(friendlyError(e))) }, [code, year, direction])
+  useEffect(() => {
+    setErr('')
+    setNotFound(false)
+    api.getPlan(code, year, direction)
+      .then((r) => setP(r))
+      .catch((e) => {
+        const msg = e instanceof Error ? e.message : String(e)
+        if (msg.includes('404')) setNotFound(true)
+        else setErr(friendlyError(e))
+      })
+  }, [code, year, direction])
   useEffect(() => { setOpinion(p?.opinion ?? null) }, [p])
 
   const genOpinion = async (refresh: boolean) => {
@@ -63,6 +75,13 @@ export default function DirectionAnalysis({ code, year, direction }: { code: str
     finally { setOpLoading(false) }
   }
 
+  if (notFound) return (
+    <div className="container">
+      <BackButton label="返回生成结果" />
+      <Empty title="该方向未进入深度分析"
+             desc="此方向仅在「观察 / 候选」列表中，未生成完整的证据链与结论。请返回结果页查看已深度分析的方向。" />
+    </div>
+  )
   if (err) return <div className="container"><ErrorState error={err} /></div>
   if (!p) return <div className="container"><Skeleton lines={5} /></div>
 
