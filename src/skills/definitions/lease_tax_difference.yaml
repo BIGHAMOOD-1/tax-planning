@@ -1,0 +1,43 @@
+id: lease_tax_difference
+name: 租赁税会差异
+direction: 租赁
+goal: 评估使用权资产与租赁负债规模，提示经营租赁税会差异（租金扣除 vs 使用权资产折旧+利息）
+policies:
+  - 企业所得税法实施条例 第四十七条（经营租赁租金扣除）
+  - 企业会计准则第21号——租赁（新租赁准则）
+data_sources:
+  - 使用权资产(205618410)
+  - 租赁负债(210441016)
+  - 资产负债表(050348744)
+eligibility:
+  facts:
+    - d205618410__EndingBalance
+  conditions:
+    - field: d205618410__EndingBalance
+      op: gt
+      value: 0
+      desc: 存在使用权资产
+calculation:
+  calculator: lease_tax_difference
+  facts:
+    - d205618410__EndingBalance
+    - d210441016__EndingBalance
+    - nominal_tax_rate
+  adjustments:
+    - 税法上经营租赁按租金扣除，会计上确认使用权资产折旧与租赁负债利息，形成时间性差异
+    - 短期租赁与低价值资产租赁可选择简化处理
+  evidence_required:
+    - 租赁合同与租赁期
+    - 使用权资产折旧与租赁负债利息计算表
+    - 税会差异台账
+  amount_requires_evidence: true
+risks:
+  - 税会差异未按租赁期分摊调整
+  - 租赁负债利息扣除与融资租赁混淆
+  - 短期/低价值租赁判定不当
+output_schema:
+  right_of_use_asset: 元
+  lease_liability: 元
+rag_queries:
+  - 经营租赁 租金 税前扣除 实施条例47条
+  - 新租赁准则 使用权资产 税会差异

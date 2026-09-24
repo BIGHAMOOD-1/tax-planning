@@ -1,0 +1,45 @@
+id: asset_impairment
+name: 资产减值损失纳税调整
+direction: 资产减值
+goal: 识别资产减值损失与信用减值损失的规模，评估其纳税调整影响（一般不得税前扣除）
+policies:
+- 企业所得税法 第十条（不得扣除项目）
+- 国家税务总局公告2011年第25号（企业资产损失所得税税前扣除管理办法）
+- 财政部 税务总局公告2019年第64号（信用减值损失税前扣除相关）
+data_sources:
+- 利润表(050312367)
+- 资产减值准备(205520356)
+- 信用减值损失明细(211210533)
+eligibility:
+  facts:
+  - impairment_total
+  conditions:
+  - field: impairment_total
+    op: gt
+    value: 0
+    desc: 当期存在减值损失
+    stage: eligibility
+calculation:
+  calculator: asset_impairment
+  facts:
+  - is_asset_impairment
+  - is_credit_impairment
+  - nominal_tax_rate
+  adjustments:
+  - 会计计提的减值准备一般不得税前扣除，需纳税调增
+  - 实际发生的资产损失（如坏账核销）符合条件方可扣除
+  evidence_required:
+  - 资产减值明细及计提依据
+  - 实际发生损失的税前扣除资料（坏账核销、资产处置等）
+  - 纳税调整明细表
+  amount_requires_evidence: true
+risks:
+- 计提减值准备不得扣除，实际损失方可扣除，存在时间性差异
+- 资产损失税前扣除需按规定清单申报/专项申报并留存资料
+- 大额减值可能引发税务关注
+output_schema:
+  total_impairment: 元，减值损失合计
+  adjustment_effect: 元，纳税调整影响估算
+rag_queries:
+- 资产减值准备 不得税前扣除 纳税调增
+- 资产损失税前扣除 清单申报 专项申报

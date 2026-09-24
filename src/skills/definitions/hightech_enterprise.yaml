@@ -1,0 +1,42 @@
+id: hightech_enterprise
+name: 高新技术企业优惠税率
+direction: 高新技术企业
+goal: 核查企业高新技术企业资格，并估算 15% 优惠税率相对法定税率的节税影响
+policies:
+  - 企业所得税法 第二十八条
+  - 高新技术企业认定管理办法（国科发火〔2016〕32号）
+  - 国家税务总局公告2017年第24号 关于实施高新技术企业所得税优惠政策有关问题的公告
+data_sources:
+  - 上市公司资质认定信息文件(212918837)
+  - 利润表(050312367)
+eligibility:
+  facts:
+    - is_hightech
+    - rd_spend_ratio
+  conditions:
+    - field: is_hightech
+      op: gt
+      value: 0
+      desc: 具备高新技术企业认定资质
+calculation:
+  calculator: hightech_rate_benefit
+  facts:
+    - is_total_profit
+    - nominal_tax_rate
+  adjustments:
+    - 优惠税率相对 25% 法定税率的差额，未考虑弥补亏损与其他优惠叠加
+  evidence_required:
+    - 高新技术企业证书及有效期
+    - 研发费用占比、科技人员占比、高新技术产品收入占比达标证明
+  amount_requires_evidence: true
+risks:
+  - 高新技术企业资格有效期 3 年，到期需重新认定
+  - 研发费用占销售收入比例、科技人员占比、高新技术产品(服务)收入占比需达标
+  - 需留存认定证书、研发项目及辅助账等资料备查
+  - 优惠税率与研发加计扣除可同时享受，但不得叠加其他冲突优惠
+output_schema:
+  total_profit: 元，利润总额
+  tax_saving: 元，税率优惠估算节税额
+rag_queries:
+  - 高新技术企业 15% 优惠税率 认定条件
+  - 高新技术企业资格 研发费用占比 科技人员占比

@@ -1,0 +1,73 @@
+diagnostics:
+  levels:
+  - 提示
+  - 观察
+  - 关注
+  category_thresholds:
+    reconcile:
+      提示: 0.1763
+      观察: 0.462
+      关注: 0.9267
+    estimate:
+      提示: 0.5727
+      观察: 0.7742
+      关注: 1.4335
+    timing:
+      提示: 0.4767
+      观察: 0.6929
+      关注: 0.9537
+    trend:
+      提示: 0.4734
+      观察: 1.0024
+      关注: 1.7949
+  items:
+    rd_detail:
+      thresholds:
+        提示: 0.2316
+        观察: 0.5195
+        关注: 0.9322
+    rd_caliber:
+      thresholds:
+        提示: 0.3603
+        观察: 0.6558
+        关注: 0.955
+    interest:
+      thresholds:
+        提示: 0.5823
+        观察: 0.798
+        关注: 1.0048
+    depreciation:
+      thresholds:
+        提示: 0.432
+        观察: 0.5527
+        关注: 0.7337
+    ar_ratio:
+      thresholds:
+        提示: 0.6217
+        观察: 0.7493
+        关注: 0.8895
+    cashflow:
+      thresholds:
+        提示: 0.706
+        观察: 1.1958
+        关注: 1.8774
+    gov_subsidy:
+      thresholds:
+        提示: 0.4296
+        观察: 0.6973
+        关注: 0.9742
+    tax_payable_change:
+      thresholds:
+        提示: 0.5072
+        观察: 0.69
+        关注: 0.9167
+    etr_yoy:
+      thresholds:
+        提示: 0.8891
+        观察: 1.2721
+        关注: 1.8905
+    rd_ratio_yoy:
+      thresholds:
+        提示: 0.2405
+        观察: 0.4011
+        关注: 0.8206

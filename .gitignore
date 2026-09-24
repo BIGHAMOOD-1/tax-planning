@@ -1,0 +1,41 @@
+# 密钥与本地配置，不提交
+.env
+config/settings.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node / 前端构建
+frontend/node_modules/
+frontend/dist/
+
+# 运行产物（仅根目录）
+/outputs/
+/data_processed/
+/knowledge/
+
+# 原始数据 / 资料（太大，不入库）
+/data/
+/案例/
+
+# 验证产物（仅根目录）
+/validation/
+
+# 文档目录（不上传）
+/docs/
+/update*.md
+/1.*v.md
+/struct*.md
+/skill.md
+
+# 缓存 / 日志
+.ruff_cache/
+.pytest_cache/
+*.log
+
+# 编辑器
+.vscode/
+.idea/

@@ -1,0 +1,137 @@
+# 计算器语义登记（Update 7.2 · P0-B）
+#
+# 只登记"语义"，不做业务计算。字段：
+#   calculation_type   6 类金额语义（见 struct2.md 4.1）
+#   impact_direction   tax_reduce（税收收益）| tax_increase（税负增加/调增）| none
+#   primary_output     主结果键（result 中的键名）
+#   economic_meaning   经济含义（用于 impact_basis 展示）
+#   baseline           相对于什么基准
+#   action             通过什么合法动作
+#   formula_role       公式角色（值 = ?）
+#   caveat             口径提示（可选）
+#
+# 不变量：confirmed_tax_impact 仅来自 CONFIRMED ∧ tax_reduce，恒 ≥0；
+#         tax_increase 仅作风险提示，不进任何"确认"字段。
+calculators:
+  expense_deduction_limit:
+    calculation_type: INCREMENTAL_TAX_BENEFIT
+    impact_direction: tax_reduce
+    primary_output: tax_effect
+    baseline: 当前费用归类（部分超限将被纳税调增）
+    action: 合规归类 + 凭证补齐，使本可扣除的支出不被调增
+    economic_meaning: 规避原本可能发生的纳税调增所带来的税收收益
+    formula_role: tax_effect = 超限调增额 × 适用税率
+    caveat: 广告宣传费超限部分可结转以后年度，属时间性差异，非全额永久收益
+
+  asset_impairment:
+    calculation_type: INCREMENTAL_TAX_BENEFIT
+    impact_direction: tax_reduce
+    primary_output: adjustment_effect
+    baseline: 会计计提减值准备（一般不得税前扣除）
+    action: 资产损失实际发生并留存备查资料，合规税前扣除
+    economic_meaning: 合规扣除资产损失、规避调增的潜在税收收益（须逐项举证）
+    formula_role: adjustment_effect = 减值损失 × 适用税率
+    caveat: 商誉等部分减值可能不可扣除，须以实际发生与资料为准
+
+  rnd_super_deduction:
+    calculation_type: INCREMENTAL_TAX_BENEFIT
+    impact_direction: tax_reduce
+    primary_output: tax_saving
+    baseline: 未享受加计扣除
+    action: 按归集范围核算研发费用并加计扣除
+    economic_meaning: 加计扣除带来的增量税收收益
+    formula_role: tax_saving = 可加计扣除额 × 适用税率
+
+  # —— 税盾类：已存在的扣除/优惠，不构成"新增收益" ——
+  fixed_asset_accelerated:
+    calculation_type: TAX_SHIELD
+    impact_direction: tax_reduce
+    primary_output: tax_shield
+    baseline: 无优惠处理
+    action: 适用一次性扣除/加速折旧（时间性）
+    economic_meaning: 时间性税盾，非新增筹划收益
+    formula_role: tax_shield = 资产支出 × 适用税率
+  hightech_rate_benefit:
+    calculation_type: TAX_SHIELD
+    impact_direction: tax_reduce
+    primary_output: tax_saving
+    baseline: 法定税率 25%
+    action: 已具备高新技术企业资格
+    economic_meaning: 已享受优惠税率的税盾，非新增筹划收益
+    formula_role: tax_saving = 利润总额 × (25% - 15%)
+  employee_compensation:
+    calculation_type: TAX_SHIELD
+    impact_direction: tax_reduce
+    primary_output: tax_shield
+    baseline: 无扣除
+    action: 合理工资薪金实际发放
+    economic_meaning: 工资薪金扣除的税盾，非新增筹划收益
+    formula_role: tax_shield = 职工薪酬 × 适用税率
+  depreciation_amortization:
+    calculation_type: TAX_SHIELD
+    impact_direction: tax_reduce
+    primary_output: tax_shield
+    baseline: 无折旧
+    action: 按规定计提折旧摊销
+    economic_meaning: 折旧摊销的税盾，非新增筹划收益
+    formula_role: tax_shield = 本期折旧 × 适用税率
+  share_based_payment:
+    calculation_type: TAX_SHIELD
+    impact_direction: tax_reduce
+    primary_output: tax_effect
+    baseline: 无扣除
+    action: 实际行权/解锁时税前扣除
+    economic_meaning: 股份支付税前扣除的税盾，非新增筹划收益
+    formula_role: tax_effect = 股份支付费用 × 适用税率
+
+  # —— 情景类（假设性，非结论） ——
+  loss_carryforward:
+    calculation_type: SCENARIO_TAX
+    impact_direction: tax_reduce
+    primary_output: tax_shield
+    baseline: 无可弥补亏损（会计观察）
+    action: 以税法认定亏损弥补
+    economic_meaning: 情景测算的潜在税盾（假设）
+    formula_role: tax_shield = 可弥补亏损 × 适用税率
+  investment_income:
+    calculation_type: SCENARIO_TAX
+    impact_direction: tax_reduce
+    primary_output: equity_transfer_tax
+    baseline: 未处置
+    action: 股权/资产转让或股息处理
+    economic_meaning: 股权转让/股息处理的估算税额
+    formula_role: equity_transfer_tax = 转让所得 × 适用税率
+  gov_subsidy_nontaxable:
+    calculation_type: SCENARIO_TAX
+    impact_direction: tax_reduce
+    primary_output: taxable_effect
+    baseline: 补助未处理
+    action: 选择不征税收入处理（三条件）
+    economic_meaning: 若全额应税的估算影响（情景）
+    formula_role: taxable_effect = 补助 × 适用税率
+  gov_subsidy_split:
+    calculation_type: SCENARIO_TAX
+    impact_direction: tax_reduce
+    primary_output: taxable_effect
+    baseline: 补助未拆分
+    action: 按资产/收益相关拆分处理
+    economic_meaning: 补助税务处理的估算影响（情景）
+    formula_role: taxable_effect = 补助 × 适用税率
+  overseas_tax_credit:
+    calculation_type: SCENARIO_TAX
+    impact_direction: tax_reduce
+    primary_output: credit_limit
+    baseline: 无抵免
+    action: 境外所得分国分项抵免
+    economic_meaning: 境外所得税抵免限额（估算）
+    formula_role: credit_limit = 境外所得 × 境内税率
+
+  # —— 无需金额计算（比例/结构/诊断/风险） ——
+  interest_deduction: {calculation_type: NO_CALCULATION, impact_direction: none}
+  income_tax_reconciliation: {calculation_type: NO_CALCULATION, impact_direction: none}
+  vat_burden: {calculation_type: NO_CALCULATION, impact_direction: none}
+  tax_cash_flow: {calculation_type: NO_CALCULATION, impact_direction: none}
+  receivable_bad_debt: {calculation_type: NO_CALCULATION, impact_direction: none}
+  intangible_amortization: {calculation_type: NO_CALCULATION, impact_direction: none}
+  lease_tax_difference: {calculation_type: NO_CALCULATION, impact_direction: none}
+  small_taxes_structure: {calculation_type: NO_CALCULATION, impact_direction: none}

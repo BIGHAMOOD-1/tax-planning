@@ -1,0 +1,42 @@
+id: investment_income
+name: 投资收益与股权转让
+direction: 投资收益
+goal: 分析投资收益构成，提示股息红利免税与股权转让所得的税务处理
+policies:
+  - 企业所得税法 第二十六条（符合条件的股息红利为免税收入）
+  - 国家税务总局公告2010年第19号（股权转让所得确认）
+  - 国家税务总局公告2011年第34号（投资企业撤回或减少投资）
+data_sources:
+  - 利润表(050312367)
+  - 长期股权投资(205404528)
+  - 交易信息总表(212658357)
+eligibility:
+  facts:
+    - is_investment_income
+  conditions:
+    - field: is_investment_income
+      op: gt
+      value: 0
+      desc: 存在投资收益
+calculation:
+  calculator: investment_income
+  facts:
+    - is_investment_income
+    - nominal_tax_rate
+  adjustments:
+    - 区分股息红利（可免税）与股权转让所得（应税）
+    - 权益法确认的投资收益为会计口径，税务上不确认
+  evidence_required:
+    - 投资收益明细（股息/转让/权益法）
+    - 被投资企业分红决议
+    - 股权转让合同与作价依据
+  amount_requires_evidence: true
+risks:
+  - 权益法投资收益税务不确认，需纳税调减
+  - 股权转让所得未申报
+  - 股息红利免税需满足持股条件
+output_schema:
+  investment_income: 元
+rag_queries:
+  - 股息红利 免税收入 条件 26条
+  - 股权转让所得 确认 19号

@@ -1,0 +1,38 @@
+id: organizational_restructuring
+name: 组织架构与子公司调整
+direction: 组织架构
+goal: 识别子公司设立/退出等组织架构变动，评估重组税务处理与特殊性税务重组适用条件
+policies:
+  - 财税〔2009〕59号（企业重组业务企业所得税处理若干问题）
+  - 国家税务总局公告2010年第4号（企业重组业务企业所得税管理办法）
+  - 国家税务总局公告2015年第48号（企业重组所得税征管问题）
+data_sources:
+  - 子公司退出明细表(045152435)
+  - 上市公司子公司情况表(165406195)
+  - 交易信息总表(212658357)
+eligibility:
+  facts:
+    - subsidiary_count
+    - d045152435__n_rows
+  conditions:
+    - field: subsidiary_count
+      op: gt
+      value: 0
+      desc: 存在子公司
+calculation:
+  calculator: ""
+  evidence_required:
+    - 子公司设立/股权变动/退出明细与工商资料
+    - 重组交易合同、评估报告
+    - 股权支付比例与经营连续性证明（适用特殊性税务处理时）
+  amount_requires_evidence: true
+risks:
+  - 股权转让/资产重组可能产生企业所得税与土地增值税等
+  - 特殊性税务处理需满足合理商业目的、股权支付比例、经营连续性等条件
+  - 亏损弥补与税收优惠资质可能因重组受影响
+output_schema:
+  subsidiary_count: 家
+  exited_count: 家
+rag_queries:
+  - 企业重组 特殊性税务处理 59号 条件
+  - 股权转让 企业所得税 重组 一般性税务处理

@@ -1,0 +1,127 @@
+# 方向触发信号阈值（Evidence Gate 使用）
+#
+# 说明：这些阈值决定"某个方向对这家公司是否特别值得查"，
+# 而不是"只要存在某个科目就触发"。可按需调整。
+#
+# 每个方向至少命中 1 条信号，才认为有事实基础（PASS/WEAK）；
+# 一条都不命中 -> NO_BASIS（进入"已排除方向"附录）。
+
+gate:
+  # 数据完整（无关键缺口）-> PASS；有信号但缺数据 -> WEAK
+  weak_on_data_gap: true
+  # L2 至少命中 N 条**核心**异常信号（辅助异常不计）；不足则降为 L1 待观察
+  min_core_anomalies: 1
+
+signals:
+  # 通用分位阈值（Level 1 异常判定）
+  p75: 0.75
+  # 研发
+  rd_expense_ratio_vs_industry: 1.0    # 研发费用率 / 行业中位数 需 >= 该倍数
+  rd_cagr_3y: 0.10                     # 研发投入3年复合增长率
+  rd_capitalize_rate: 0.30             # 研发资本化率
+  # 融资
+  interest_debt_ratio: 0.10            # 有息负债/总资产
+  finance_expense_ratio_vs_industry: 1.2
+  # 资产
+  fixed_asset_ratio: 0.10
+  capex_to_revenue: 0.05               # 资本支出/营业收入
+  # 政府补助
+  gov_subsidy_to_revenue: 0.005
+  # 所得税
+  etr_gap: 0.03                        # |实际税率 - 名义税率|
+  # 资产减值
+  impairment_to_profit: 0.10           # 减值损失/|利润总额|
+  # 职工薪酬
+  payroll_to_revenue: 0.05
+  # 增值税/小税种
+  tax_surcharge_ratio_vs_industry: 1.5
+  # 费用扣除
+  period_expense_ratio_vs_industry: 1.2
+  # 投资收益
+  investment_income_to_profit: 0.20
+  # 税负现金流
+  tax_cash_ratio_low: 0.80             # 实缴/计提比 低于此值 -> 异常
+  tax_cash_ratio_high: 1.50            # 高于此值 -> 异常
+  # 应收账款
+  ar_to_revenue: 0.20
+  ar_rise_years: 2                     # 近N年应收占收入比上升
+  # 股权结构
+  equity_separation: 0.20              # 两权分离度
+  # 无形资产
+  intangible_to_assets: 0.05
+  # 租赁
+  rou_to_assets: 0.05                  # 使用权资产/总资产
+  # 关联交易
+  related_party_ratio: 0.10            # 关联交易事件占比
+  # —— Gate 信号阈值（Update 7.3：由 gate.py 魔数迁移至此，可配置/可审计）——
+  rd_scale_min: 100000000              # 研发投入绝对规模门槛（1 亿元）
+  hightech_rd_ratio: 0.03              # 高企认定：研发投入占收入 ≥3%
+  overseas_ratio: 0.10                 # 海外子公司占比 ≥10%
+  vat_cash_ratio_low: 0.003            # 税费现金比异常下界（≤0.3%）
+  vat_cash_ratio_high: 0.12            # 税费现金比异常上界（≥12%）
+  entertainment_to_revenue: 0.005      # 业务招待费/营业收入 ≥0.5%
+  advertising_to_revenue: 0.05         # 广告宣传费/营业收入 ≥5%
+  top5_concentration: 0.30             # 前五大客户/供应商金额/收入 ≥30%
+
+# 行业校准：命中行业名（子串匹配）时覆盖对应信号阈值
+industry_overrides:
+  房地产业:
+    interest_debt_ratio: 0.15
+    ar_to_revenue: 0.05
+    fixed_asset_ratio: 0.02
+    rd_expense_ratio_vs_industry: 1.5
+  制造业:
+    capex_to_revenue: 0.03
+    rd_expense_ratio_vs_industry: 0.8
+  计算机、通信和其他电子设备制造业:
+    rd_expense_ratio_vs_industry: 0.8
+    rd_capitalize_rate: 0.20
+  批发和零售业:
+    ar_to_revenue: 0.10
+    payroll_to_revenue: 0.03
+
+# 诊断引擎：按类型分三档（提示 / 观察 / 关注）
+diagnostics:
+  levels: [提示, 观察, 关注]
+  category_thresholds:
+    reconcile: {提示: 0.18, 观察: 0.46, 关注: 0.93}   # 勾稽类（2020-2024 非零偏差 P75/P90/P99）
+    estimate:  {提示: 0.57, 观察: 0.77, 关注: 1.43}   # 推算类
+    timing:    {提示: 0.48, 观察: 0.69, 关注: 0.95}   # 确认类
+    trend:     {提示: 0.47, 观察: 1.00, 关注: 1.79}   # 趋势类（同比，受小分母影响偏大）
+  items:
+    # 逐诊断阈值（可选）：某诊断可覆盖所属类别阈值：
+    #   items.<id>.thresholds: {提示: x, 观察: y, 关注: z}
+    # 建议值由 `python scripts/calibrate_thresholds.py` 写入 thresholds.suggested.yaml（不自动覆盖）。
+    tax_reconcile:    {category: reconcile}            # 当期+递延 vs 利润表所得税
+    rd_detail:        {category: reconcile}            # 研发明细 vs 研发投入
+    rd_caliber:       {category: reconcile}            # 研发投入(表) vs 研发费用(利润表)
+    interest:         {category: estimate, benchmark_rate: 0.05}
+    depreciation:     {category: estimate, benchmark_rate: 0.08}
+    ar_ratio:         {category: estimate, benchmark: 0.20}
+    revenue_gap:      {category: estimate}
+    cashflow:         {category: estimate}
+    gov_subsidy:      {category: timing}
+    tax_payable_change: {category: timing}
+    etr_yoy:          {category: trend}
+    rd_ratio_yoy:     {category: trend}
+    rou_depreciation: {category: estimate, gate: false, max_severity: 提示}  # 使用权资产 vs 本期减少（数据质量待核实）
+    cash_debt_both_high: {category: estimate, cash_ratio_min: 0.15, debt_ratio_min: 0.10, gate: false}
+    gross_margin_yoy:    {category: trend, gate: false}
+    cip_to_fixed_assets: {category: estimate, ratio_min: 0.30, gate: false}
+  # 通用「存量-流量」诊断：大额存量科目，其应有流量却接近 0/异常低 -> 勾稽异常
+  # 可自由增删字段对；stock/flow 均取自画像字段名。
+  stock_flow:
+    - id: rou_depreciation
+      name: 使用权资产与本期减少偏低（待核实）
+      direction: 租赁
+      stock: d205618410__EndingBalance
+      flow: d205618410__DecreaseDuringYear
+      min_stock: 100000000          # 存量门槛（1 亿元）
+      benchmark_ratio: 0.05         # 合理年流量/存量下限（如年折旧率 5%）
+      evidence_needed: [租赁合同与租赁期, 使用权资产折旧与租赁负债利息计算表, 税会差异台账]
+  # 诊断健康检查参数（数据可运行性阈值，与税务异常阈值无关）
+  health:
+    coverage_min: 0.20          # 非零样本占比过低 -> COVERAGE_LOW
+    saturation_ratio_max: 0.10  # 触达上限的样本占比过高 -> SATURATED
+    zero_ratio_max: 0.95        # 零值占比过高 -> SATURATED
+    upper_bound: 1.0            # 相对偏差的理论上限

@@ -1,0 +1,46 @@
+id: income_tax_reconciliation
+name: 所得税税会差异分析
+direction: 所得税税会差异
+goal: 对比按名义税率计算的理论税负与实际所得税费用，识别税会差异规模与可能的筹划/风险点
+policies:
+  - 企业所得税法 第二十一条、第二十二条
+  - 国家税务总局公告2014年第29号（企业所得税应纳税所得额若干税务处理问题）
+  - 企业会计准则第18号——所得税
+data_sources:
+  - 利润表(050312367)
+  - 税项名义税率(204837437)
+  - 递延所得税资产、递延所得税负债(205606775)
+eligibility:
+  facts:
+    - is_total_profit
+    - is_income_tax
+    - nominal_tax_rate
+  conditions:
+    - field: is_income_tax
+      op: gt
+      value: 0
+      desc: 当期存在所得税费用
+calculation:
+  calculator: income_tax_reconciliation
+  facts:
+    - is_total_profit
+    - is_income_tax
+    - nominal_tax_rate
+  adjustments:
+    - 区分永久性差异（如不征税收入、不可扣除支出）与暂时性差异（递延所得税）
+    - 剔除税收优惠（加计扣除、减免税）对差异的影响
+  evidence_required:
+    - 纳税调整明细表
+    - 递延所得税资产/负债明细
+    - 免税收入、加计扣除等优惠明细
+  amount_requires_evidence: true
+risks:
+  - 实际税率低于名义税率可能来自优惠，也可能来自弥补亏损，需区分
+  - 差异可能包含税务风险（如应调未调事项）
+  - 递延所得税确认需符合会计准则，避免调节利润
+output_schema:
+  difference: 元，税会差异
+  etr: 实际税率
+rag_queries:
+  - 企业所得税 税会差异 纳税调整
+  - 递延所得税 暂时性差异 确认条件

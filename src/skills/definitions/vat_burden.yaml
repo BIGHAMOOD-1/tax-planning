@@ -1,0 +1,47 @@
+id: vat_burden
+name: 增值税税负与留抵
+direction: 增值税
+goal: 以名义税率与税费现金流近似评估增值税税负水平，提示留抵与申报风险
+policies:
+  - 中华人民共和国增值税法（2026.1.1 起施行）及实施条例
+  - 财政部 税务总局 海关总署公告2019年第39号（留抵退税）
+  - 国家税务总局公告2019年第20号（增值税期末留抵退税征管）
+data_sources:
+  - 税项名义税率(204837437)
+  - 利润表(050312367)
+  - 现金流量表(053202606)
+  - 资产负债表(050348744)
+eligibility:
+  facts:
+    - is_revenue
+    - vat_rate
+  conditions:
+    - field: is_revenue
+      op: gt
+      value: 0
+      desc: 存在营业收入
+calculation:
+  calculator: vat_burden
+  facts:
+    - vat_rate
+    - is_revenue
+    - cf_tax_paid
+    - is_tax_surcharge
+    - bs_tax_payable
+  adjustments:
+    - CSMAR 无销项/进项税额，无法精确计算应纳增值税
+    - 需结合申报表判断留抵、加计抵减、即征即退等
+  evidence_required:
+    - 增值税申报表（销项、进项、留抵）
+    - 税负率行业对比
+  amount_requires_evidence: true
+risks:
+  - 税负率显著低于行业可能被关注
+  - 留抵退税需符合条件并防范虚开风险
+  - 视同销售、进项转出等易漏项
+output_schema:
+  vat_rate: 名义税率
+  cash_tax_ratio: 税费现金比
+rag_queries:
+  - 增值税税负率 行业 预警
+  - 增值税留抵退税 条件 39号

@@ -1,0 +1,43 @@
+id: gov_subsidy_nontaxable
+name: 政府补助不征税收入判定
+direction: 政府补助不征税
+goal: 判定政府补助是否可作为不征税收入，并提示其对应支出不得扣除的影响
+policies:
+  - 财税〔2011〕70号（专项用途财政性资金企业所得税处理）
+  - 企业所得税法 第七条（不征税收入）
+  - 国家税务总局公告2019年第45号
+data_sources:
+  - 政府补助(213143417)
+  - 利润表(050312367)
+eligibility:
+  facts:
+    - gov_subsidy_total
+  conditions:
+    - field: gov_subsidy_total
+      op: gt
+      value: 0
+      desc: 存在政府补助
+calculation:
+  calculator: gov_subsidy_nontaxable
+  facts:
+    - gov_subsidy_total
+    - gov_subsidy_income_related
+    - nominal_tax_rate
+  adjustments:
+    - 不征税收入须同时满足：专项资金拨付文件、专门管理办法、单独核算
+    - 不征税收入对应支出不得税前扣除，需权衡
+  evidence_required:
+    - 资金拨付文件
+    - 专项资金管理办法
+    - 单独核算凭证
+  amount_requires_evidence: true
+risks:
+  - 不符合三条件却按不征税处理，存在补税风险
+  - 不征税收入对应支出未调增
+  - 与资产相关补助的分摊年限税会不一致
+output_schema:
+  gov_subsidy_total: 元
+  taxable_effect: 元，若全额应税的影响
+rag_queries:
+  - 不征税收入 三个条件 财税2011 70号
+  - 不征税收入 对应支出 不得扣除

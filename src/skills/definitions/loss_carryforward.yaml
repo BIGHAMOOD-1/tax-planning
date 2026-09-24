@@ -1,0 +1,44 @@
+id: loss_carryforward
+name: 弥补亏损与亏损结转
+direction: 亏损弥补
+goal: 识别可弥补亏损规模与结转期限，评估亏损弥补的税盾价值
+policies:
+  - 企业所得税法 第十八条（亏损结转5年）
+  - 财税〔2018〕76号（高新技术企业、科技型中小企业亏损结转10年）
+  - 国家税务总局公告2018年第45号
+data_sources:
+  - 利润表(050312367)
+  - 资产负债表(050348744)
+  - 未分配利润(210646977)
+eligibility:
+  facts:
+    - is_total_profit
+    - bs_retained_earnings
+  conditions:
+    - field: bs_retained_earnings
+      op: lt
+      value: 0
+      desc: 存在累计未分配利润为负（可能含可弥补亏损）
+calculation:
+  calculator: loss_carryforward
+  facts:
+    - is_total_profit
+    - bs_retained_earnings
+    - nominal_tax_rate
+  adjustments:
+    - 会计亏损 ≠ 税法亏损，需以纳税申报表认定
+    - 结转期限一般5年，高新/科技型中小企业10年
+  evidence_required:
+    - 历年企业所得税年度申报表（可弥补亏损额）
+    - 亏损弥补台账
+  amount_requires_evidence: true
+risks:
+  - 亏损弥补超期失效
+  - 会计亏损与税法亏损差异未调整
+  - 重组/变更影响亏损结转
+output_schema:
+  carryforward: 元，可弥补亏损规模（估算）
+  tax_shield: 元，潜在税盾
+rag_queries:
+  - 亏损结转 5年 10年 高新技术企业 76号
+  - 弥补亏损 申报表 认定

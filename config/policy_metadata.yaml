@@ -1,0 +1,31 @@
+# 政策元数据（人工校验层，Update 5.1 · P1）
+#
+# 三层来源（与 Evidence 原则一致）：
+#   1) 规则 / 已有结构化元数据（doc_no / date / tax_type / effect_level / url）——优先，不重复抽取；
+#   2) 规则 + 人工校验（本文件）：生效/失效日期、适用主体、层级、关键条件；
+#   3) LLM 抽取候选（src/evidence/policy_meta.extract_candidates）——必须经 validation/review 后采纳，
+#      绝不允许 LLM 直接写政策库。
+#
+# 字段：
+#   effective_from / effective_to : YYYY-MM-DD
+#   status                        : VALID / EXPIRED / NOT_YET_EFFECTIVE
+#   subject                       : [企业, 个人, 个体, 非居民, ...]
+#   level                         : 法律 / 行政法规 / 规章 / 规范性文件
+#   conditions                    : [适用条件...]
+#   source                        : manual
+#   metadata_confidence           : HIGH / MEDIUM / LOW
+#   verification                  : VERIFIED / PENDING
+#
+# 示例：
+# policies:
+#   "财税〔2018〕99号":
+#     effective_from: "2018-01-01"
+#     effective_to: "2023-12-31"
+#     status: EXPIRED
+#     subject: [企业]
+#     level: 规范性文件
+#     conditions: ["用于研发活动", "费用化或资本化分别处理"]
+#     source: manual
+#     metadata_confidence: HIGH
+#     verification: VERIFIED
+policies: {}

@@ -1,0 +1,145 @@
+# 诊断规则说明（审查引擎展示用）
+# key 与 config/thresholds.yaml::diagnostics.items 一一对应
+tax_reconcile:
+  name: 所得税拆分与利润表差异
+  category: 勾稽类
+  judge: 当期所得税 + 递延所得税 与 利润表所得税费用 的差异
+  formula: (current_tax_expense + deferred_tax_expense) vs is_income_tax
+  fields: [current_tax_expense, deferred_tax_expense, is_income_tax]
+  direction: 所得税税会差异
+  evidence: [所得税费用明细, 纳税调整明细表]
+
+rd_detail:
+  name: 研发明细与研发投入差异
+  category: 勾稽类
+  judge: 研发投入（表）与研发费用明细合计的差异
+  formula: rd_spend_sum vs rd_expense_detail_sum
+  fields: [rd_spend_sum, rd_expense_detail_sum]
+  direction: 研发筹划
+  evidence: [研发支出辅助账, 研发费用构成明细]
+
+rd_caliber:
+  name: 研发投入与利润表研发费用差异
+  category: 勾稽类
+  judge: 研发投入（表）与利润表"研发费用"的差异（口径差异）
+  formula: rd_spend_sum vs is_rd_expense
+  fields: [rd_spend_sum, is_rd_expense]
+  direction: 研发筹划
+  evidence: [研发费用构成明细, 费用化/资本化依据]
+
+interest:
+  name: 利息支出与推算值差异
+  category: 推算类
+  judge: 利息支出 与 有息负债 × 基准利率 的差异
+  formula: interest_expense_best vs interest_debt_ratio × 总资产 × 基准利率
+  fields: [interest_expense_best, interest_debt_ratio, bs_total_assets]
+  direction: 融资筹划
+  evidence: [关联方借款明细, 同期同类贷款利率证明]
+
+depreciation:
+  name: 折旧计提与推算值差异
+  category: 推算类
+  judge: 本期折旧 与 固定资产原值 × 基准折旧率 的差异
+  formula: fa_accum_dep_increase vs fa_original_end × 基准折旧率
+  fields: [fa_accum_dep_increase, fa_original_end]
+  direction: 折旧摊销
+  evidence: [固定资产明细及折旧政策]
+
+ar_ratio:
+  name: 应收账款占比偏离基准
+  category: 推算类
+  judge: 应收账款 / 营业收入 超过基准的部分
+  formula: bs_accounts_receivable / is_revenue vs 基准
+  fields: [bs_accounts_receivable, is_revenue]
+  direction: 应收账款
+  evidence: [应收账款账龄分析]
+
+revenue_gap:
+  name: 营业总收入与营业收入差异
+  category: 推算类
+  judge: 营业总收入 与 营业收入 的差异
+  formula: is_total_revenue vs is_revenue
+  fields: [is_total_revenue, is_revenue]
+  direction: 增值税
+  evidence: [收入明细]
+
+cashflow:
+  name: 经营现金流与净利润+折旧差异
+  category: 推算类
+  judge: 经营现金流净额 与 净利润+折旧 的差异（仅盈利企业）
+  formula: cf_operating_net vs is_net_profit + 折旧
+  fields: [cf_operating_net, is_net_profit, fa_accum_dep_increase]
+  direction: 税负现金流
+  evidence: [现金流量表附注]
+
+gov_subsidy:
+  name: 政府补助与利润表确认差异
+  category: 确认类
+  judge: 政府补助 与 其他收益+营业外收入 的差异
+  formula: gov_subsidy_total vs is_other_income + is_non_operating_income
+  fields: [gov_subsidy_total, is_other_income, is_non_operating_income]
+  direction: 政府补助
+  evidence: [补助文件与会计处理]
+
+tax_payable_change:
+  name: 应交税费期末余额变动
+  category: 确认类
+  judge: 应交税费期末 较期初 的变动（辅助观察）
+  formula: tax_payable_end vs tax_payable_begin
+  fields: [tax_payable_end, tax_payable_begin]
+  direction: 税负现金流
+  evidence: [应交税费明细, 各税种申报表与缴款凭证]
+
+etr_yoy:
+  name: 实际税率同比突变
+  category: 趋势类
+  judge: 实际税率 与上期 的相对变动
+  formula: etr vs 上期 etr
+  fields: [etr]
+  direction: 所得税税会差异
+  evidence: [纳税调整明细表]
+
+rd_ratio_yoy:
+  name: 研发费用率同比突变
+  category: 趋势类
+  judge: 研发费用率 与上期 的相对变动
+  formula: rd_expense_ratio vs 上期 rd_expense_ratio
+  fields: [rd_expense_ratio]
+  direction: 研发筹划
+  evidence: [研发费用构成明细]
+
+rou_depreciation:
+  name: 使用权资产与本期减少偏低（待核实）
+  category: 推算类
+  judge: 使用权资产存量较大，但本期减少（含折旧/处置）明显偏低；流量缺失/为 0 时不报
+  formula: d205618410__DecreaseDuringYear vs d205618410__EndingBalance × 基准比例
+  fields: [d205618410__EndingBalance, d205618410__DecreaseDuringYear]
+  direction: 租赁
+  evidence: [租赁合同与租赁期, 使用权资产折旧与租赁负债利息计算表, 税会差异台账]
+
+cash_debt_both_high:
+  name: 存贷双高（高货币资金+高有息负债）
+  category: 推算类
+  judge: 货币资金占比高 且 有息负债率高
+  formula: bs_cash / bs_total_assets 且 interest_debt_ratio
+  fields: [bs_cash, bs_total_assets, interest_debt_ratio]
+  direction: 融资筹划
+  evidence: [货币资金明细, 借款合同与利率, 资金归集/存贷双高说明]
+
+gross_margin_yoy:
+  name: 毛利率同比突变
+  category: 趋势类
+  judge: 毛利率 与上期 的相对变动
+  formula: gross_margin vs 上期 gross_margin
+  fields: [gross_margin]
+  direction: 所得税税会差异
+  evidence: [收入成本明细, 毛利率变动说明]
+
+cip_to_fixed_assets:
+  name: 在建工程占固定资产比偏高
+  category: 推算类
+  judge: 在建工程 / 固定资产 高于门槛（未转固可能延迟折旧）
+  formula: bs_cip / bs_fixed_assets
+  fields: [bs_cip, bs_fixed_assets]
+  direction: 资产筹划
+  evidence: [在建工程明细与转固计划, 竣工结算资料]

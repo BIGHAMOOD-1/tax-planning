@@ -1,0 +1,37 @@
+id: equity_structure
+name: 股权结构与实际控制人
+direction: 股权结构
+goal: 分析股权性质、控股股东与两权分离度，提示关联交易、重组与个人所得税相关风险
+policies:
+  - 企业所得税法 第四十一条（关联交易）
+  - 国家税务总局公告2014年第67号（股权转让所得个人所得税）
+  - 关于完善股权激励和技术入股有关所得税政策的通知（财税〔2016〕101号）
+data_sources:
+  - 中国上市公司股权性质文件(212541585)
+  - 上市公司基本信息年度表(044219154)
+eligibility:
+  facts:
+    - equity_nature
+    - largest_holder_rate
+  conditions:
+    - field: largest_holder_rate
+      op: gt
+      value: 0
+      desc: 存在第一大股东持股信息
+calculation:
+  calculator: ""
+  evidence_required:
+    - 股权结构图与实际控制人穿透
+    - 关联方清单
+    - 股权变动/股权激励方案
+  amount_requires_evidence: true
+risks:
+  - 控股股东资金占用与关联交易
+  - 股权转让/激励的个人所得税与递延纳税
+  - 两权分离度高的治理与税务风险
+output_schema:
+  equity_nature: 股权性质
+  largest_holder_rate: 第一大股东持股比例
+rag_queries:
+  - 股权转让 个人所得税 67号
+  - 股权激励 递延纳税 101号

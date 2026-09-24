@@ -1,0 +1,41 @@
+id: overseas_tax
+name: 跨境税务安排
+direction: 跨境筹划
+goal: 识别境外子公司与跨境交易，评估境外所得抵免、受控外国企业、常设机构等跨境税务风险
+policies:
+  - 企业所得税法 第二十三条、第二十四条（境外所得抵免）
+  - 财税〔2017〕84号（境外所得税收抵免有关问题）
+  - 企业所得税法 第四十五条（受控外国企业）
+data_sources:
+  - 上市公司子公司情况表(165406195)
+  - 中国上市公司股权性质文件(212541585)
+eligibility:
+  facts:
+    - subsidiary_overseas_count
+  conditions:
+    - field: subsidiary_overseas_count
+      op: gt
+      value: 0
+      desc: 存在境外/海外子公司
+calculation:
+  calculator: overseas_tax_credit
+  facts:
+    - subsidiary_overseas_count
+    - nominal_tax_rate
+  adjustments:
+    - 以子公司合计净利润近似境外所得（未区分境内/境外）
+    - 抵免限额 = 境外所得 × 境内税率，实际抵免按分国（地区）分项计算
+  evidence_required:
+    - 境外子公司注册地、持股结构与实际经营情况
+    - 境外所得与已纳税额证明（用于抵免）
+    - 分国（地区）抵免计算表
+  amount_requires_evidence: true
+risks:
+  - 境外所得未按规定申报或抵免
+  - 低税率地区利润留存可能触发受控外国企业规则
+  - 跨境关联交易转让定价与预提所得税
+output_schema:
+  overseas_subsidiary_count: 家
+rag_queries:
+  - 境外所得 税收抵免 财税2017 84号
+  - 受控外国企业 规则 企业所得税法45条

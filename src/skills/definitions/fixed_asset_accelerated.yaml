@@ -1,0 +1,52 @@
+id: fixed_asset_accelerated
+name: 固定资产加速折旧与一次性扣除
+direction: 资产筹划
+version: "1.1"
+effective_from: "2023-01-01"
+effective_to: ""
+goal: 判断企业设备等固定资产是否适用加速折旧或一次性税前扣除政策，并估算税盾影响
+policies:
+  - 财税〔2018〕54号 关于设备 器具扣除有关企业所得税政策的通知
+  - 财政部 税务总局公告2023年第37号 关于设备 器具扣除有关企业所得税政策的公告
+  - 财税〔2014〕75号 / 财税〔2015〕106号 固定资产加速折旧
+data_sources:
+  - 资产负债表(050348744)
+  - 现金流量表(053202606)
+eligibility:
+  facts:
+    - bs_fixed_assets
+    - cf_capex
+  conditions:
+    - field: cf_capex
+      op: gt
+      value: 0
+      desc: 当期存在购建固定资产、无形资产和其他长期资产的现金支出
+    - field: bs_fixed_assets
+      op: gt
+      value: 0
+      desc: 期末存在固定资产
+calculation:
+  calculator: fixed_asset_accelerated
+  facts:
+    - bs_fixed_assets
+    - cf_capex
+    - nominal_tax_rate
+  adjustments:
+    - 仅新购进设备器具且单价不超过 500 万元可一次性扣除
+    - 房屋、建筑物不适用一次性扣除
+  evidence_required:
+    - 设备器具购置清单与单价
+    - 资产类别（是否房屋建筑物）
+    - 税会差异台账
+  amount_requires_evidence: true
+risks:
+  - 一次性扣除仅适用于新购进设备器具，单价不超过 500 万元
+  - 房屋、建筑物不得适用一次性扣除
+  - 税会差异需台账管理与纳税调整
+  - 加速折旧属于时间性差异，不减少总税负
+output_schema:
+  base_amount: 元，可适用资产支出规模
+  tax_shield: 元，估算当期税盾
+rag_queries:
+  - 设备器具一次性扣除 500万元 2023年第37号
+  - 固定资产加速折旧 企业所得税

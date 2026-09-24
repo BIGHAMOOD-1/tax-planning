@@ -1,0 +1,76 @@
+paths:
+  workspace: "."
+  raw_data: "data"
+  raw_cases: "案例"
+  docs: "docs"
+  data_processed: "data_processed"
+  tables_dir: "data_processed/tables"
+  derived_dir: "data_processed/derived"
+  features_dir: "data_processed/features"
+  knowledge: "knowledge"
+  outputs: "outputs"
+
+params:
+  years: [2020, 2021, 2022, 2023, 2024]
+  stock_code_digits: 6
+  default_report_type: "合并"
+  annual_month: 12
+  keep_parent_report: true
+  currency_convert: false
+
+llm:
+  provider: "openai_compatible"
+  base_url: "https://api.deepseek.com/v1"
+  model: "deepseek-chat"
+  temperature: 0.2
+  timeout: 120
+  # 密钥请放在环境变量 OPENAI_API_KEY 或 .env 中，不要写进本文件
+  use_mock_when_unavailable: true
+  cache: false      # LLM 响应缓存（默认关；可在「设置」页开启，加速重复分析）
+
+# Embedding 可单独配置（DeepSeek 无 embedding 接口）。
+# 如需向量检索，填一个提供 embeddings 的服务，并把 rag.backend 改为 embedding。
+# Embedding 可单独配置（与对话模型解耦）。
+embedding:
+  enabled: true
+  base_url: "https://api.siliconflow.cn/v1"
+  model: "BAAI/bge-m3"
+  rerank_model: "BAAI/bge-reranker-v2-m3"
+  api_key_env: "SILICONFLOW_API_KEY"
+  batch_size: 32
+  batch_interval: 0.1   # 批间间隔(秒)，缓解 TPM 频率限制
+
+rag:
+  policy_dir: "knowledge/policy_corpus"
+  cases_dir: "knowledge/cases"
+  index_dir: "knowledge/index"
+  chunk_size: 800
+  chunk_overlap: 120
+  top_k: 8          # 每个 query 最终返回条数
+  case_top_k: 3     # 每个 query 案例库返回条数
+  backend: "auto"   # auto: 向量可用则用向量，否则本地 TF-IDF
+  hybrid: true      # 向量 + BM25 -> 合并 -> Reranker
+  candidates: 40    # 每路召回候选数
+  # Reranker 容错（工程护栏）：429 指数退避 → 仍失败进入冷却期并回退 RRF
+  rerank:
+    retries: 3      # 单次调用的最大尝试次数
+    backoff: 2.0    # 退避基数（秒）：2s → 4s → 8s
+    cooldown: 60    # 限流后冷却秒数（期间直接 RRF，不重复打接口）
+    cache_size: 512 # 结果缓存条数（相同 query+docs 命中缓存）
+  # 案例库频道加权（检索共享，不硬过滤；多样性保底至少 1 条非偏好频道）
+  channel_weights:
+    red:  {税务筹划合规: 1.5, 实务解读: 1.2, 税务稽查案例: 1.0}
+    blue: {税务稽查案例: 1.5, 实务解读: 1.2, 税务筹划合规: 1.0}
+
+debate:
+  rounds: 2         # 红蓝辩论轮次（规则模式下自动降为 1 轮；无信息增益会提前终止）
+  early_stop: true  # Blue 认可且无待补证据时提前收敛
+
+discovery:
+  max_deep_directions: 5   # 深度分析配额：L2 方向按信号强度排序，取前 N 个
+
+report:
+  formats: [json, md]
+
+logging:
+  level: "INFO"

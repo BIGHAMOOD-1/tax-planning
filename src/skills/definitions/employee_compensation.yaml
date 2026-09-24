@@ -1,0 +1,43 @@
+id: employee_compensation
+name: 职工薪酬税前扣除
+direction: 职工薪酬
+goal: 评估职工薪酬的税前扣除规模与合规要点（合理工资薪金、实际发放、代扣代缴个税）
+policies:
+  - 企业所得税法实施条例 第三十四条（合理工资薪金）
+  - 国家税务总局公告2015年第34号（工资薪金和职工福利费扣除问题）
+  - 国家税务总局公告2009年第3号（工资薪金及职工福利费扣除问题）
+data_sources:
+  - 应付职工薪酬(210230772)
+  - 资产负债表(050348744)
+eligibility:
+  facts:
+    - employee_compensation_base
+  conditions:
+    - field: employee_compensation_base
+      op: gt
+      value: 0
+      desc: 当期存在职工薪酬
+calculation:
+  calculator: employee_compensation
+  facts:
+    - employee_compensation_base
+    - nominal_tax_rate
+  adjustments:
+    - 未在汇算清缴结束前实际发放的工资薪金不得在当年扣除
+    - 职工福利费不超过工资薪金总额 14%、工会经费 2%、职工教育经费 8% 部分可扣除
+    - 需已实际发放并依法代扣代缴个人所得税
+  evidence_required:
+    - 工资薪金发放明细及个税申报表
+    - 社保、公积金缴纳凭证
+    - 职工福利费、工会经费、教育经费明细
+  amount_requires_evidence: true
+risks:
+  - 计提未发放部分不得扣除
+  - 三项经费超限额部分需纳税调增
+  - 关联方/股东薪酬需符合独立交易与合理性
+output_schema:
+  compensation_base: 元，职工薪酬基数
+  tax_shield: 元，估算税盾
+rag_queries:
+  - 合理工资薪金 税前扣除 实际发放 34号
+  - 职工福利费 工会经费 教育经费 扣除限额

@@ -1,0 +1,47 @@
+id: depreciation_amortization
+name: 折旧摊销税会差异
+direction: 折旧摊销
+goal: 评估固定资产、无形资产、开发支出的折旧摊销规模与税会差异，提示税盾与调整事项
+policies:
+  - 企业所得税法 第十一条（不得计提折旧的固定资产）
+  - 企业所得税法实施条例 第六十条（最低折旧年限）
+  - 财税〔2014〕75号 / 财税〔2015〕106号（加速折旧）
+data_sources:
+  - 资产负债表(050348744)
+  - 固定资产、累计折旧、减值准备(205523719)
+  - 无形资产(101955005)
+  - 长期待摊费用(205522025)
+eligibility:
+  facts:
+    - bs_fixed_assets
+  conditions:
+    - field: bs_fixed_assets
+      op: gt
+      value: 0
+      desc: 存在固定资产
+calculation:
+  calculator: depreciation_amortization
+  facts:
+    - bs_fixed_assets
+    - bs_intangible_assets
+    - bs_development_expense
+    - csmar__NonDebtTaxShield
+    - nominal_tax_rate
+  adjustments:
+    - 税法最低折旧年限与会计折旧年限差异需调整
+    - 减值准备不得计提折旧
+    - 加速折旧属时间性差异
+  evidence_required:
+    - 固定资产/无形资产明细及折旧摊销政策
+    - 税会折旧年限差异台账
+  amount_requires_evidence: true
+risks:
+  - 税会折旧差异未调整
+  - 减值资产继续计提折旧
+  - 加速折旧与一次性扣除的税会差异管理
+output_schema:
+  base: 元，折旧摊销类资产规模
+  non_debt_tax_shield: 非债务税盾
+rag_queries:
+  - 固定资产 最低折旧年限 实施条例60条
+  - 折旧 税会差异 纳税调整

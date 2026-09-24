@@ -1,0 +1,43 @@
+id: expense_deduction_limit
+name: 期间费用扣除限额
+direction: 费用扣除
+goal: 评估期间费用规模与占比，提示业务招待费、广告宣传费等限额扣除风险
+policies:
+  - 企业所得税法实施条例 第四十三条、第四十四条（业务招待费、广告宣传费）
+  - 财政部 税务总局公告2020年第43号（广告费和业务宣传费支出税前扣除）
+data_sources:
+  - 利润表(050312367)
+  - 费用明细表(165419839)
+eligibility:
+  facts:
+    - is_revenue
+  conditions:
+    - field: is_revenue
+      op: gt
+      value: 0
+      desc: 存在营业收入
+calculation:
+  calculator: expense_deduction_limit
+  facts:
+    - is_admin_expense
+    - is_selling_expense
+    - is_finance_expense
+    - is_revenue
+  adjustments:
+    - 业务招待费按发生额60%且不超过营业收入5‰扣除
+    - 广告宣传费一般不超过营业收入15%（特殊行业30%）
+    - 需按费用明细逐项归类
+  evidence_required:
+    - 费用明细表（招待费、广告费、宣传费金额）
+    - 费用税前扣除凭证
+  amount_requires_evidence: true
+risks:
+  - 招待费、广告费超限额部分需纳税调增
+  - 费用凭证不合规不得扣除
+  - 与收入不配比的费用易被调整
+output_schema:
+  total: 元，期间费用合计
+  expense_ratio: 期间费用率
+rag_queries:
+  - 业务招待费 扣除 60% 5‰
+  - 广告费和业务宣传费 扣除限额 15%

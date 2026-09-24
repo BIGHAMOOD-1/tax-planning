@@ -1,0 +1,43 @@
+id: interest_deduction
+name: 融资利息税前扣除与资本弱化
+direction: 融资筹划
+goal: 评估企业利息支出的税前扣除规模与关联方债资比风险
+policies:
+  - 财税〔2008〕121号 关于企业关联方利息支出税前扣除标准有关税收政策问题的通知
+  - 企业所得税法实施条例 第三十八条
+data_sources:
+  - 资产负债表(050348744)
+  - 利润表(050312367)
+eligibility:
+  facts:
+    - interest_expense_best
+  conditions:
+    - field: interest_expense_best
+      op: gt
+      value: 0
+      desc: 存在利息费用（或财务费用）支出
+calculation:
+  calculator: interest_deduction
+  facts:
+    - interest_expense_best
+    - interest_debt_to_equity
+    - nominal_tax_rate
+  adjustments:
+    - 关联方债资比上限：金融企业 5:1，其他企业 2:1
+    - 超出部分利息不得扣除，且利率不得超过金融企业同期同类贷款利率
+  evidence_required:
+    - 关联方借款明细（本金/利率/期限）
+    - 权益投资金额
+    - 同期同类贷款利率证明
+  amount_requires_evidence: true
+risks:
+  - 关联方债权性投资与权益性投资比例（金融企业 5:1，其他企业 2:1）超出部分不得扣除
+  - 利率是否超过金融企业同期同类贷款利率
+  - 需能证明交易符合独立交易原则
+output_schema:
+  interest_expense: 元，利息支出
+  debt_to_equity: 倍，债资比
+  limit_ratio: 倍，允许债资比上限
+rag_queries:
+  - 关联方利息支出 债资比 2比1 财税2008 121号
+  - 利息支出税前扣除 同期同类贷款利率

@@ -1,0 +1,40 @@
+id: tax_cash_flow
+name: 税费现金流与实缴差异
+direction: 税负现金流
+goal: 对比支付的各项税费与计提税费，识别实缴与计提差异及税务现金流特征
+policies:
+  - 企业所得税法 第五十四条（分月/分季预缴、年度汇算清缴）
+  - 税收征收管理法（申报与缴纳）
+data_sources:
+  - 现金流量表(053202606)
+  - 资产负债表(050348744)
+  - 利润表(050312367)
+eligibility:
+  facts:
+    - cf_tax_paid
+  conditions:
+    - field: cf_tax_paid
+      op: gt
+      value: 0
+      desc: 存在税费现金支出
+calculation:
+  calculator: tax_cash_flow
+  facts:
+    - cf_tax_paid
+    - bs_tax_payable
+    - is_income_tax
+    - is_tax_surcharge
+  adjustments:
+    - 支付的各项税费含增值税等全部税费，与所得税口径不完全可比
+  evidence_required:
+    - 各税种申报表与缴款凭证
+    - 应交税费明细
+  amount_requires_evidence: true
+risks:
+  - 长期实缴低于计提可能存在欠缴或递延风险
+  - 预缴不足导致汇算清缴补税与滞纳金
+output_schema:
+  paid_accrued_ratio: 实缴/计提比
+rag_queries:
+  - 企业所得税 预缴 汇算清缴 滞纳金
+  - 应交税费 实缴 差异

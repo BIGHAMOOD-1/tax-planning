@@ -1,0 +1,2399 @@
+datasets:
+  '210351661':
+    name: 一年内到期的非流动负债
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - FN_Fn06901
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  044926026:
+    name: 上市公司人员结构表
+    shape: detail
+    entity: Symbol
+    time: EndDate
+    base_keys: []
+    dimensions:
+    - EmployDetail
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  044219154:
+    name: 上市公司基本信息年度表
+    shape: wide
+    entity: Symbol
+    time: EndDate
+    base_keys: []
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '165406195':
+    name: 上市公司子公司情况表
+    shape: detail
+    entity: Stkcd
+    time: EndDate
+    base_keys: []
+    dimensions:
+    - FN_Fn06101
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      FN_Fn06107:
+        '1': 海外
+        '2': 港澳台
+        '3': 国内
+      FN_Fn06117:
+        '0': 否
+        '1': 是。
+  '045225416':
+    name: 上市公司子公司联营合营情况表
+    shape: detail
+    entity: Symbol
+    time: EndDate
+    base_keys: []
+    dimensions:
+    - RalatedParty
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      ISExit:
+        '1': 是
+        '0': 否。
+      RelationshipCode:
+        '7502': 上市公司的子公司
+        '7506': 上市公司的合营企业
+        '7507': 上市公司的联营企业
+      Sgnrgn:
+        '1': 海外
+        '2': 港澳台
+        '3': 国内
+  '213147414':
+    name: 上市公司开发支出
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - DevItem
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Source:
+        '0': 定期报告
+        '1': IPO等
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '045323156':
+    name: 上市公司行业分类表
+    shape: reference
+    entity: Symbol
+    time: ''
+    base_keys: []
+    dimensions: []
+    event_key: []
+    dedup: none
+    aggregate: skip
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      IndustryClassificationID:
+        P0201: 证监会行业分类2001年版
+        P0203: 申银万国行业分类2011修订版
+        P0204: 新财富行业分类
+        P0206: 中证行业分类
+        P0207: 证监会行业分类2012年版
+        P0210: 恒生行业分类
+        P0211: 申银万国行业分类2014修订版
+        P0212: 中信证券行业分类
+        P0215: 中证行业分类2016年版
+        P0217: 中信证券行业分类2.0修订版
+        P0218: 申银万国行业分类2021修订版
+        P0219: 中证行业分类2021年版
+        P0220: 恒生行业分类2023修订版
+        P0221: 中国上市公司协会上市公司行业分类
+  '212918837':
+    name: 上市公司资质认定信息文件
+    shape: detail
+    entity: Stkcd
+    time: Prgrsdt
+    base_keys: []
+    dimensions:
+    - Protype
+    - Obname
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Level:
+        '1': 国家级
+        '2': 省级
+        '3': 市级
+  '212541585':
+    name: 中国上市公司股权性质文件
+    shape: wide
+    entity: Symbol
+    time: EndDate
+    base_keys: []
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      EquityNatureID:
+        '1': 国企、2=民营、3=外资、4=其他
+  '212658357':
+    name: 交易信息总表
+    shape: event
+    entity: Symbol
+    time: FirstDeclareDate
+    base_keys: []
+    dimensions: []
+    event_key:
+    - EventID
+    dedup: entity_time_event
+    aggregate: event
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      BusinessID:
+        '001': 002、……）。
+      TradingPositionID:
+        '3101': 买方
+        '3102': 卖方
+        '3103': 标的方
+        '3104': 原债权人
+        '3105': 原债务人
+        '3107': 既是卖方又是标的方。
+      UnderlyingTypeID:
+        '3201': 资产标的
+        '3202': 股权标的
+        '3203': 资产和股权标的。
+      PayTypeID:
+        '1601': 资产支付
+        '1602': 现金支付
+        '1603': 股票支付
+        '1604': 债券支付
+        '1605': 承担债务
+        '1606': 现金和资产项混合支付
+        '1607': 现金和股票项混合支付
+        '1608': 现金项和承担债务混合支付
+        '1609': 其他支付方式
+        '1610': 股票和资产项混合支付。
+      SourceTypeID:
+        '2101': 贷款
+        '2102': 使用自有资金
+        '2103': 发行债券
+        '2104': 发行股票
+        '2105': 贷款及使用自有资金
+        '2106': 贷款及发行债券
+        '2107': 贷款及发行股票
+        '2108': 使用自有资金及发行债券
+        '2109': 使用自有资金及发行股票
+        '2110': 发行债券及股票
+        '2201': 定向增发、Q2202=库藏股、Q2203=持有的其他公司股票、Q2204=其他
+        '5601': 资产
+      MergerTypeID:
+        '1': 横向并购
+        '2': 纵向并购
+        '3': 混合并购
+        '4': 资产调整
+        '10': 其他。
+      RestructuringTypeID:
+        '3001': 资产收购
+        '3002': 资产剥离
+        '3003': 资产置换
+        '3004': 吸收合并
+        '3005': 债务重组
+        '3006': 股份回购
+        '3007': 要约收购
+        '3008': 股权转让
+      MARegionTypeID:
+        '1': 境内并购（交易买方及标的方均为境内公司）
+        '2': 出境并购（交易买方为境内公司
+        '3': 入境并购（交易买方为境外公司
+        '4': 境外并购（交易买方及标的方均为境外公司）
+  '212717025':
+    name: 交易信息总表
+    shape: event
+    entity: Symbol
+    time: FirstDeclareDate
+    base_keys: []
+    dimensions: []
+    event_key:
+    - EventID
+    dedup: entity_time_event
+    aggregate: event
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      ProgramScheduleID:
+        '6301': 实施
+        '6302': 停止实施
+        '6303': 股东大会通过
+        '6304': 股东大会否决
+        '6305': 证监会通过
+        '6306': 证监会否决
+        '6307': 董事会预案
+        '6308': 完成或者过户
+        '6309': 达成转让意向
+        '6310': 尚在协商
+        '6311': 申报待批
+        '6312': 签署转让协议
+        '6313': 其他
+        '6314': 取消方案
+        '6315': 国资委通过
+        '6316': 国资委否决
+        '6319': 董事会通过
+        '6320': 董事会否决
+        '6321': 延迟实施
+        '6322': 监事会通过
+        '6323': 监事会否决。
+      TradingPositionID:
+        '3101': 买方
+        '3102': 卖方
+        '3103': 标的方
+        '3104': 原债权人
+        '3105': 原债务人
+        '3106': 既是买方又是标的方
+        '3107': 既是卖方又是标的方。交易地位编码为空的为上市公司的子公司发起的并购重组事件
+      RestructuringTypeID:
+        '3001': 资产收购
+        '3002': 资产剥离
+        '3003': 资产置换
+        '3004': 吸收合并
+        '3005': 债务重组
+        '3006': 股份回购
+        '3007': 要约收购
+        '3008': 股权转让。
+      UnderlyingTypeID:
+        '3201': 资产标的
+        '3202': 股权标的
+        '3203': 资产和股权标的。
+      PayTypeID:
+        '1601': 资产支付
+        '1602': 现金支付
+        '1603': 股票支付
+        '1604': 债券支付
+        '1605': 承担债务
+        '1606': 现金和资产项混合支付
+        '1607': 现金和股票项混合支付
+        '1608': 现金项和承担债务混合支付
+        '1609': 其他支付方式
+        '1610': 股票和资产项混合支付。
+      SourceTypesID:
+        '2101': 贷款
+        '2102': 使用自有资金
+        '2103': 发行债券
+        '2104': 发行股票
+        '2105': 贷款及使用自有资金
+        '2106': 贷款及发行债券
+        '2107': 贷款及发行股票
+        '2108': 使用自有资金及发行债券
+        '2109': 使用自有资金及发行股票
+        '2110': 发行债券及股票
+        '2201': 定向增发、Q2202=库藏股、Q2203=持有的其他公司股票、Q2204=其他
+  '204934664':
+    name: 交易性金融资产、可供出售金融资产
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn00701
+    - Fn00702
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+      Fn00701:
+        '1': 交易性金融资产
+        '2': 可供出售金融资产
+  '210312434':
+    name: 代理买卖证券款明细
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn09601
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '211357179':
+    name: 以公允价值计量的资产和负债
+    shape: detail
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    dimensions:
+    - FN_Fn01302
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      DataSources:
+        '0': 定期报告 。
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      FN_Fn01301:
+        '1': 金融资产
+        '2': 金融负债
+        '3': 其他资产
+        '4': 其他负债
+        '5': 资产合计
+        '6': 负债合计
+  053701089:
+    name: 会计政策、会计估计和合并财务报表的编制方法
+    shape: wide
+    entity: Stkcd
+    time: Accper
+    base_keys: []
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '205618410':
+    name: 使用权资产
+    shape: detail
+    entity: Symbol
+    time: EndDate
+    base_keys:
+    - StateTypeID
+    dimensions:
+    - SubjectCategoryID
+    - UseAssetItem
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '211210533':
+    name: 信用减值损失明细
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn10101
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '210126462':
+    name: 借款抵押
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn02701
+    - Fn02702
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+      Fn02701:
+        '1': 短期借款
+        '2': 长期借款
+  '205847695':
+    name: 债权投资明细
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn08801
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '211149107':
+    name: 公允价值变动损益明细
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn10001
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '205939424':
+    name: 其他债权投资明细
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn08901
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '205909958':
+    name: 其他权益工具投资明细
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn09001
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '210344549':
+    name: 其他流动负债
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - FN_Fn06601
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '205111699':
+    name: 其他流动资产
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn01601
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '050312367':
+    name: 利润表
+    shape: wide
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '211406861':
+    name: 前五大客户、供应商情况表
+    shape: detail
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    dimensions:
+    - FN_Fn01002
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      DataSources:
+        '0': 定期报告 。
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      FN_Fn01001:
+        '1': 第一名
+        '2': 第二名
+        '3': 第三名
+        '4': 第四名
+        '5': 第五名
+        '6': 合计
+      FN_Fn01003:
+        '1': 客户
+        '2': 供应商
+      FN_Fn01004:
+        '1': 销售
+        '2': 采购
+  '210359812':
+    name: 合同负债
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn08001
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '205231596':
+    name: 合同资产
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn08201
+    - Fn08202
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Fn08201:
+        '1': 性质
+        '2': 账龄
+        '3': 计提方法（单项计提或组合计提）
+  '205559837':
+    name: 商誉
+    shape: detail
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    dimensions:
+    - Category
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      DataSources:
+        '0': 定期报告 。
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Category:
+        '1': 原值
+        '2': 减值准备
+        '3': 账面价值
+  '205523719':
+    name: 固定资产、累计折旧、减值准备
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn02001
+    - Fn02002
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Fn02001:
+        '1': 原值
+        '2': 累计折旧
+        '3': 净值
+        '4': 减值准备
+        '5': 净额
+  '205622632':
+    name: 在建工程基本情况表
+    shape: detail
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    dimensions:
+    - FN_Fn017A01
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      DataSources:
+        '0': 定期报告 。
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '211420517':
+    name: 境内外会计准则下会计数据差异
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn10203
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '045152435':
+    name: 子公司退出明细表(2008-2020)
+    shape: detail
+    entity: Symbol
+    time: EndDate
+    base_keys: []
+    dimensions:
+    - RalatedParty
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Sgnrgn:
+        '1': 国内
+        '2': 国外
+  '135822724':
+    name: 存货
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn01401
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '210307520':
+    name: 应交税费
+    shape: detail
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    dimensions:
+    - FN_Fn04301
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      FN_Fn04301:
+        Q3301: 企业所得税
+        Q3302: 土地增值税
+        Q3303: 营业
+        Q3304: 个人所得税
+        Q3305: 城市维护建设税
+        Q3306: 教育费附加
+        Q3307: 房产税
+        Q3308: 增值税
+        Q3309: 其他
+        Q3310: 合计
+        Q3311: 地方教育费附加
+        Q3312: 水利建设基金
+        Q3313: 土地使用税
+        Q3314: 印花税
+        Q3315: 资源税
+        Q3316: 消费
+        Q3317: 车船使用税
+        Q3318: 价格调控基金
+        Q3319: 防洪基金
+        Q3320: 矿产资源补偿费
+        Q3321: 车辆购置附加费
+        Q3322: 农林特产税
+        Q3323: 环境保护税。
+  '210431887':
+    name: 应付债券(2003-2020)
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn04001
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '210200544':
+    name: 应付利息
+    shape: detail
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    dimensions:
+    - FN_Fn02801
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '210230772':
+    name: 应付职工薪酬
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn03201
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '210231780':
+    name: 应付股利
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - FN_Fn02901
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '210131945':
+    name: 应付账款、其他应付款、预收账款
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn030a01
+    - Fn030a02
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Fn030a01:
+        '1': 应付账款
+        '2': 其他应付款
+        '3': 预收账款
+  '210203795':
+    name: 应付账款、其他应付款明细、预收账款明细披露
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn030b01
+    - Fn030b02
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Fn030b01:
+        '1': 应付账款
+        '2': 其他应付款
+        '3': 预收账款
+  '211338184':
+    name: 应收票据、应付票据
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn008a01
+    - Fn008a02
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Fn008a01:
+        '1': 应收票据
+        '2': 应付票据
+      Fn008a02:
+        '3201': 银行承兑汇票
+        '3202': 商业承兑汇票
+        '3203': 合计
+        '3204': 信用证
+        '3205': 支票
+        '3206': 其他
+        '3207': 坏账准备.
+  '205208679':
+    name: 应收账款、其他应收款、预付账款
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn011a01
+    - Fn011a02
+    - Category
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Fn011a01:
+        '1': 应收帐款
+        '2': 其他应收款
+        '3': 预付账款
+      Category:
+        '1': 种类
+        '2': 账龄
+        '3': 组合（种类及账龄组 合）
+  '205113901':
+    name: 应收账款、其他应收款、预付账款明细披露
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn011b01
+    - Fn011b03
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Fn011b01:
+        '1': 应收帐款
+        '2': 其他应收
+        '3': 预付账款
+  '205454327':
+    name: 开发支出
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn02302
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '211134056':
+    name: 所得税费用
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - FN_Fn06501
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '053223042':
+    name: 所有者权益变动表
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - SubjectName
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      DataSources:
+        '0': 定期公告
+  '205345963':
+    name: 投资性房地产
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn01901
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+      Fn01901:
+        '1': 原价2、累计折旧3、减值准备4、公允价值变动 5、账面价值
+  '210855392':
+    name: 投资收益
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    - Sgnyea
+    dimensions:
+    - Fn05301
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Sgnyea:
+        '1': 本期
+        '2': 上期
+  '211303812':
+    name: 支付(收到)的其他与投资活动有关的现金
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - FN_Fn06301
+    - FN_Fn06302
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      FN_Fn06301:
+        '1': 支付
+        '2': 收到
+  '211319188':
+    name: 支付(收到)的其他与筹资活动有关的现金
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - FN_Fn06401
+    - FN_Fn06402
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      FN_Fn06401:
+        '1': 支付
+        '2': 收到
+  '164139954':
+    name: 支付(收到)的其他与经营活动有关的现金
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - FN_Fn05801
+    - FN_Fn05803
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      FN_Fn05801:
+        '1': 支付
+        '2': 收到
+  '121521378':
+    name: 政府补助
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn05601
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      DataSources:
+        '1': 其他收益
+        '2': 营业外收入
+        '3': 递延收益
+        '4': 财务费用
+        '5': 当期损益
+        '6': 专项应付款
+        '7': 主营业务收入
+        '8': 固定资产
+        '9': 一年内到期的非流动负债
+        '10': 其他应付款
+        '11': 营业成本
+        '12': 其他应收款
+        '13': 制造费用
+        '14': 管理费用、15、环保支出
+        '16': 在建工程
+        '17': 销售费用
+        '18': 其他非流动负债
+        '19': 其他流动负债
+        '20': 应收账款
+        '21': 研发支出
+        '22': 主营业务成本
+        '23': 研发费用
+        '24': 长期资产减少折旧及摊销
+        '25': 营业收入
+        '26': 长期应付款
+        '27': 营业税金及附加
+        '28': 应付款项
+        '29': 营业外支出
+        '30': 无形资产
+        '31': 资产处置收益
+        '32': 其他综合收益等。
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '213143417':
+    name: 政府补助
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Item
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      DataSources:
+        '1': 其他收益
+        '2': 营业外收入
+        '3': 递延收益
+        '4': 财务费用
+        '5': 当期损益
+        '6': 专项应付款
+        '7': 主营业务收入
+        '8': 固定资产
+        '9': 一年内到期的非流动负债
+        '10': 其他应付款
+        '11': 营业成本
+        '12': 其他应收款
+        '13': 制造费用
+        '14': 管理费用、15、环保支出
+        '16': 在建工程
+        '17': 销售费用
+        '18': 其他非流动负债
+        '19': 其他流动负债
+        '20': 应收账款
+        '21': 研发支出
+        '22': 主营业务成本
+        '23': 研发费用
+        '24': 长期资产减少折旧及摊销
+        '25': 营业收入
+        '26': 长期应付款
+        '27': 营业税金及附加
+        '28': 应付款项
+        '29': 营业外支出
+        '30': 无形资产
+        '31': 资产处置收益
+        '32': 其他综合收益等。
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '101955005':
+    name: 无形资产
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn02201
+    - Fn02202
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+      Fn02201:
+        '1': 原价2、累计摊销3、减值准备4、账面价值
+  '210646977':
+    name: 未分配利润
+    shape: wide
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      DataSources:
+        '0': 定期报告 。
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '053202606':
+    name: 现金流量表(直接法)
+    shape: wide
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '210640397':
+    name: 盈余公积
+    shape: detail
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    dimensions:
+    - FN_Fn04201
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '213111405':
+    name: 研发投入情况表
+    shape: wide
+    entity: Symbol
+    time: EndDate
+    base_keys:
+    - StateTypeCode
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Source:
+        '0': 定期报告
+        '1': IPO
+      StateTypeCode:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '211127976':
+    name: 研发费用
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - FN_Fn06001
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '210441016':
+    name: 租赁负债
+    shape: detail
+    entity: Symbol
+    time: EndDate
+    base_keys:
+    - StateTypeID
+    dimensions:
+    - ItemName
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Source:
+        '0': 定期报告
+        '1': IPO
+  053541380:
+    name: 税项名义税率
+    shape: wide
+    entity: Stkcd
+    time: Accper
+    base_keys: []
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '204837437':
+    name: 税项名义税率
+    shape: wide
+    entity: Stkcd
+    time: Accper
+    base_keys: []
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '210935890':
+    name: 管理费用
+    shape: detail
+    entity: Stkcd
+    time: accper
+    base_keys:
+    - typrep
+    - Sgnyea
+    dimensions:
+    - FN05201
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Sgnyea:
+        '1': 本期
+        '2': 上期
+  '210639483':
+    name: 股本
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn04401
+    - Fn04402
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Fn04401:
+        '1': 完全流通 2、未流通股 3、有限售条件 4、未托管 5、合计
+  '210921575':
+    name: 营业外收入或支出
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    - Sgnyea
+    dimensions:
+    - Fn05502
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Sgnyea:
+        '1': 本期
+        '2': 上期
+      Fn05501:
+        '1': 营业外收入
+        '2': 营业外支出
+  '210839049':
+    name: 营业收入、营业成本
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    - Sgnyea
+    dimensions:
+    - fn04814
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+      Sgnyea:
+        '1': 本期
+        '2': 上期
+      fn04814:
+        '1': 主营业务收入 2、其他业务收入 3、营业收入
+      Fn04801:
+        '1': 按行业或业务分部
+        '2': 按地区分部
+        '3': 按产品分部
+      Fn04815:
+        '1': 海外
+        '2': 港澳台
+        '3': 国内。当分部标准为2时
+  '210833737':
+    name: 营业税金及附加
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    - Sgnyea
+    dimensions:
+    - Fn04901
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Sgnyea:
+        '1': 本期
+        '2': 上期
+  '210252567':
+    name: 衍生金融负债明细
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn09501
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '205203644':
+    name: 衍生金融资产明细
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn08601
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '212335916':
+    name: 财务指标
+    shape: wide
+    entity: Symbol
+    time: EndDate
+    base_keys:
+    - StateType
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '210836951':
+    name: 财务费用
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    - Sgnyea
+    dimensions:
+    - Fn05101
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Sgnyea:
+        '1': 本期
+        '2': 上期
+      Fn05101:
+        '1': 利息支出
+        '2': 利息收入
+        '3': 汇兑损失
+        '4': 汇兑收益
+        '5': 其他
+        '6': 合计
+        '7': 资本化利息
+  '204913438':
+    name: 货币资金
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn00601
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '165419839':
+    name: 费用明细表
+    shape: wide
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '211431145':
+    name: 资产、负债重大变动情况表
+    shape: detail
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    dimensions:
+    - FN_Fn01202
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      DataSources:
+        '0': 定期报告 。
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      FN_Fn01201:
+        '1': 资产类
+        '2': 负债类
+        '3': 其他
+  '205520356':
+    name: 资产减值准备
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn02501
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '211127049':
+    name: 资产减值损失
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - FN_Fn05901
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  050348744:
+    name: 资产负债表
+    shape: wide
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '210632445':
+    name: 资本公积
+    shape: detail
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    dimensions:
+    - FN_Fn04101
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+  '212439147':
+    name: 过度负债
+    shape: wide
+    entity: Symbol
+    time: Enddate
+    base_keys: []
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      ST:
+        '0': 未剔除
+        '1': 剔除
+      IsNewOrSuspend:
+        '0': 未剔除
+        '1': 剔除
+      ISBSE:
+        '0': 未剔除
+        '1': 剔除
+      PropertyRightsNature:
+        '0': 非国有企业
+        '1': 国有企业。根据实际控制性质判断
+  '205606775':
+    name: 递延所得税资产、递延所得税负债
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn02601
+    - Fn02602
+    - Fn02603
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Fn02601:
+        '1': 递延所得税资产
+        '2': 递延所得税负债
+        '3': 递延所得税
+      Fn02602:
+        '1': 已确认
+  '210924591':
+    name: 销售费用
+    shape: detail
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    - Sgnyea
+    dimensions:
+    - FN05001
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表
+      Sgnyea:
+        '1': 本期
+        '2': 上期
+  '210458420':
+    name: 长期应付款明细
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn09701
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '210446082':
+    name: 长期应付职工薪酬
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - FN_Fn07101
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps: {}
+  '205522025':
+    name: 长期待摊费用
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn02401
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+  '205404528':
+    name: 长期股权投资
+    shape: detail
+    entity: Stkcd
+    time: Accper
+    base_keys:
+    - Typrep
+    dimensions:
+    - Fn01801
+    - Fn01802
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      Typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表。
+      Fn01801:
+        '1': 成本法—子公司
+        '2': 成本法—合营和联营企业
+        '3': 成本法—其他
+        '4': 成本法
+        '5': 权益法—子公司
+        '6': 权益法—合营和联营企业
+        '7': 权益法—其他
+        '8': 权益法
+        '9': 长期债权投资
+        '10': 其他长期投资
+        '11': 总计 注少数公司将“长期股权投资”视为“长期投资”
+  '212853465':
+    name: 非效率投资
+    shape: wide
+    entity: Symbol
+    time: Enddate
+    base_keys: []
+    dimensions: []
+    event_key: []
+    dedup: entity_time
+    aggregate: wide
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      STPT:
+        '0': 未剔除
+        '1': 剔除
+      IsNewOrSuspend:
+        '0': 未剔除
+        '1': 剔除
+      ISBSE:
+        '0': 未剔除
+        '1': 剔除
+      InefficInvestSign:
+        '0': 投资不足
+        '1': 过度投资。根据非效率投资模型计算得到的残差进行判断
+  '210940194':
+    name: 非经常性损益
+    shape: detail
+    entity: stkcd
+    time: accper
+    base_keys:
+    - typrep
+    dimensions:
+    - FN_Fn00901
+    event_key: []
+    dedup: entity_time_dimensions
+    aggregate: detail
+    include_total: false
+    total_keywords:
+    - 合计
+    - 小计
+    memo_prefixes:
+    - 其中
+    - 减
+    code_maps:
+      DataSources:
+        '0': 定期报告 。
+      typrep:
+        '1': 合并会计报表
+        '2': 母公司会计报表

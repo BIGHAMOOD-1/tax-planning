@@ -1,0 +1,44 @@
+id: share_based_payment
+name: 股份支付税前扣除
+direction: 股份支付
+goal: 识别股份支付/股权激励费用，提示等待期不得扣除、实际行权时扣除的税会差异与个税递延
+policies:
+  - 国家税务总局公告2012年第18号（股权激励企业所得税处理）
+  - 财税〔2016〕101号（股权激励和技术入股递延纳税）
+  - 国家税务总局公告2015年第80号（非上市公司股权激励个税）
+data_sources:
+  - 管理费用(210935890)
+  - 销售费用(210924591)
+  - 利润表(050312367)
+eligibility:
+  facts:
+    - expense_share_based
+  conditions:
+    - field: expense_share_based
+      op: gt
+      value: 0
+      desc: 存在股份支付费用
+calculation:
+  calculator: share_based_payment
+  facts:
+    - expense_share_based
+    - nominal_tax_rate
+  adjustments:
+    - 等待期内会计确认的费用不得税前扣除
+    - 实际行权/解锁时按行权价与公允价差额扣除
+  evidence_required:
+    - 股权激励计划与授予协议
+    - 等待期/行权条件
+    - 行权价格与公允价格资料
+    - 个税递延备案
+  amount_requires_evidence: true
+risks:
+  - 等待期费用未纳税调增
+  - 行权时扣除金额计算错误
+  - 未按规定办理个税递延纳税备案
+output_schema:
+  share_based_expense: 元
+  tax_effect: 元
+rag_queries:
+  - 股权激励 等待期 不得扣除 行权 18号
+  - 股权激励 递延纳税 101号 备案

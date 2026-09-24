@@ -1,0 +1,71 @@
+# 字段默认 Resolution 登记表（Update 3.1）
+#
+# default_resolution: DIRECT | PROXY | INSUFFICIENT
+#   含义：字段作为「企业事实」的**默认语义属性**，不是当前计算上下文下的最终 resolution。
+#   Skill 若将某字段用于替代其他口径，应在 Skill 审查/计算阶段判定为 PROXY。
+# qualification_proxy: true 表示"不可由财务指标替代资格事实"
+# of: 该字段默认被视为谁的代理（说明用）
+#
+# 机制：run_calculator 对「关键输入」(calc.facts ∪ core_inputs) 依本表判定：
+#   INSUFFICIENT/MISSING > PROXY > DIRECT（优先级闭合）
+#   1) 任一关键输入 INSUFFICIENT/MISSING → NOT_CALCULABLE
+#   2) 无缺失但任一 PROXY              → SCENARIO_IMPACT（强制 caliber_verified=false）
+#   3) 全部 DIRECT                     → 保留 Calculator 自身 caliber_verified
+
+# —— 既有三项（已确认）——
+interest_expense_best: {default_resolution: PROXY, of: 关联方债务利息, note: 总有息负债口径}
+cf_capex:              {default_resolution: PROXY, of: 符合优惠条件的设备购置额}
+bs_retained_earnings:  {default_resolution: PROXY, of: 可结转税务亏损}
+
+# A. 研发（研发投入 ≠ 研发费用）
+rd_spend_sum:  {default_resolution: PROXY, of: 税法口径研发费用, note: 研发投入≠研发费用（会计口径≠税法口径）}
+rd_expenses:   {default_resolution: PROXY, of: 费用化研发费用}
+is_rd_expense: {default_resolution: DIRECT}
+
+# B. 设备 / 资产（≠ 符合特定优惠条件的设备购置额）
+fa_original_end:       {default_resolution: PROXY, of: 优惠设备购置额}
+fa_accum_dep_increase: {default_resolution: PROXY, of: 税法口径本期折旧}
+bs_fixed_assets:       {default_resolution: PROXY, of: 可加速折旧资产规模}
+bs_cip:                {default_resolution: PROXY, of: 在建工程转固规模}
+
+# C. 税务亏损（会计口径 ≠ 税务可弥补亏损）
+is_net_profit:         {default_resolution: PROXY, of: 可弥补亏损}
+is_total_profit:       {default_resolution: PROXY, of: 可弥补亏损}
+bs_deferred_tax_asset: {default_resolution: PROXY, of: 可结转税务亏损, note: 仅证据/线索之一，不可等同}
+
+# D. 现金税负 / 所得税（税费现金支出 ≠ 所得税现金支付）
+cf_tax_paid:      {default_resolution: PROXY, of: 所得税现金支付, note: 含增值税等其他税种}
+bs_tax_payable:   {default_resolution: PROXY, of: 应缴所得税}
+is_income_tax:    {default_resolution: DIRECT}
+is_tax_surcharge: {default_resolution: PROXY, of: 各小税种}
+
+# E. 关联交易（不可直接推出关联方债务/利息/定价）
+related_party_deal_ratio: {default_resolution: PROXY, of: 关联方交易定价}
+ma_related_party_count:   {default_resolution: PROXY, of: 关联方债务/利息}
+interest_debt_ratio:      {default_resolution: PROXY, of: 关联方债务}
+
+# F. 政府补助（不可直接推出某项补助的税务处理条件）
+gov_subsidy_total:       {default_resolution: PROXY, of: 符合税务处理条件的补助}
+is_other_income:         {default_resolution: PROXY, of: 与收益相关补助}
+is_non_operating_income: {default_resolution: PROXY, of: 补助确认}
+
+# G. 高新技术企业 / 资格类（禁止由财务指标替代资格事实）
+rd_expense_ratio: {qualification_proxy: true}
+rd_person:        {qualification_proxy: true}
+is_hightech:      {default_resolution: PROXY, of: 高新技术企业资格, note: 需证书/有效期等证据}
+
+# H. 资产减值 / 信用减值（会计计提 ≠ 税法实际发生可扣损失）
+is_asset_impairment:  {default_resolution: PROXY, of: 可税前扣除的资产损失, note: 计提减值准备一般不得税前扣除；实际发生并留存资料方可扣}
+is_credit_impairment: {default_resolution: PROXY, of: 可税前扣除的资产损失, note: 信用减值同理，需坏账核销等资料}
+
+# —— 逐技能口径覆盖（Update 6.4）——
+# 同一字段在不同技能语境下口径不同：字段默认是"最保守"的全局语义；
+# 若某技能中该字段是"直接口径"（会计事实本身，而非替代其他口径），在此覆盖为 DIRECT。
+by_skill:
+  # 税率优惠以"利润总额"为基数——是会计事实，而非"可弥补亏损"的代理
+  hightech_rate_benefit:
+    is_total_profit: {default_resolution: DIRECT, note: 作为税率优惠基数，是会计事实}
+  # 税会差异同样以利润总额为基数
+  income_tax_reconciliation:
+    is_total_profit: {default_resolution: DIRECT, note: 税会差异以利润总额为基数}
+

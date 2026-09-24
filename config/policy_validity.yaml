@@ -1,0 +1,17 @@
+# 政策时效覆盖表（人工校验层，Update 5.0 · P0-D）
+#
+# 用途：为「需要可靠生效/失效依据」的政策补充显式时效。
+# 未登记的政策：由 src/evidence/policy_validity.py 按
+#   显式字段 → 标题(废止/失效) → 发布日期推定 → UNKNOWN 依次判定。
+#
+# 字段：
+#   effective_from / effective_to : YYYY-MM-DD（可只写一个）
+#   status                        : VALID / EXPIRED / NOT_YET_EFFECTIVE
+#
+# 示例（请按需填写真实文号与日期）：
+# policies:
+#   "财税〔2018〕99号":
+#     effective_from: "2018-01-01"
+#     effective_to: "2023-12-31"
+#     status: EXPIRED
+policies: {}

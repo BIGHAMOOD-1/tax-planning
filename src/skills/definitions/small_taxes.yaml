@@ -1,0 +1,41 @@
+id: small_taxes
+name: 小税种核查
+direction: 小税种
+goal: 结合披露的各税种名义税率与税金及附加，提示房产税、土地增值税、印花税等小税种风险
+policies:
+  - 中华人民共和国房产税暂行条例
+  - 中华人民共和国土地增值税暂行条例
+  - 中华人民共和国印花税法（2022.7.1 起施行）
+data_sources:
+  - 营业税金及附加(210833737)
+  - 税项名义税率(204837437)
+  - 利润表(050312367)
+eligibility:
+  facts:
+    - is_tax_surcharge
+  conditions:
+    - field: is_tax_surcharge
+      op: gt
+      value: 0
+      desc: 存在税金及附加
+calculation:
+  calculator: small_taxes_structure
+  facts:
+    - is_tax_surcharge
+  adjustments:
+    - 按税种（城建税/教育费附加/印花税/房产税/土地使用税/车船税/环保税）拆分税金及附加
+    - 各税种申报以申报表为准，会计口径仅作结构提示
+  evidence_required:
+    - 房产/土地权属证明与从价/从租计税依据
+    - 印花税应税凭证台账
+    - 土地增值税项目清算资料（如涉及）
+  amount_requires_evidence: true
+risks:
+  - 房产税从租/从价计税错误
+  - 印花税应税合同漏缴
+  - 土地增值税预缴与清算
+output_schema:
+  tax_surcharge: 元，税金及附加
+rag_queries:
+  - 房产税 从价 从租 计税依据
+  - 印花税 税目 税率 2022

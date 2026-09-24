@@ -1,0 +1,39 @@
+id: related_party_transfer_pricing
+name: 关联交易与转让定价
+direction: 关联交易
+goal: 识别关联交易与客户/供应商集中度，评估转让定价合规风险与资料准备要求
+policies:
+  - 企业所得税法 第四十一条（关联交易独立交易原则）
+  - 国家税务总局公告2016年第42号（关联申报和同期资料管理）
+  - 国家税务总局公告2017年第6号（特别纳税调查调整及相互协商程序）
+data_sources:
+  - 交易信息总表(212658357)
+  - 前五大客户、供应商情况表(211406861)
+  - 上市公司子公司情况表(165406195)
+eligibility:
+  facts:
+    - ma_related_party_count
+    - top5_customer_supplier_amount
+  conditions:
+    - field: ma_related_party_count
+      op: gt
+      value: 0
+      desc: 存在关联交易事件
+calculation:
+  calculator: ""
+  evidence_required:
+    - 关联方清单及关联关系
+    - 关联交易明细（类型、金额、定价方式）
+    - 可比非受控价格等转让定价方法分析
+    - 同期资料（本地文档/主体文档/特殊事项文档）
+  amount_requires_evidence: true
+risks:
+  - 关联交易不符合独立交易原则可能被特别纳税调整
+  - 达到门槛未按规定进行关联申报或准备同期资料将被处罚
+  - 客户/供应商高度集中可能隐含关联关系
+output_schema:
+  related_party_count: 笔数
+  top5_amount: 元
+rag_queries:
+  - 关联交易 独立交易原则 特别纳税调整
+  - 关联申报 同期资料 门槛 42号

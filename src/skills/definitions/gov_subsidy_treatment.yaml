@@ -1,0 +1,45 @@
+id: gov_subsidy_treatment
+name: 政府补助税务处理
+direction: 政府补助
+goal: 核查政府补助的税务处理，区分应税收入与不征税收入，评估税会差异
+policies:
+  - 财政部 国家税务总局关于专项用途财政性资金企业所得税处理问题的通知（财税〔2011〕70号）
+  - 企业所得税法 第六条、第七条
+  - 国家税务总局公告2019年第45号（政府补助增值税处理相关）
+data_sources:
+  - 政府补助(213143417)
+  - 利润表(050312367)
+eligibility:
+  facts:
+    - gov_subsidy_total
+    - is_revenue
+  conditions:
+    - field: gov_subsidy_total
+      op: gt
+      value: 0
+      desc: 存在政府补助
+calculation:
+  calculator: gov_subsidy_split
+  facts:
+    - gov_subsidy_total
+    - nominal_tax_rate
+  adjustments:
+    - 区分与资产相关（递延收益，分期计入损益）与与收益相关（当期计入损益）
+    - 不征税收入须满足专项拨付文件、专门管理办法、单独核算三条件
+  evidence_required:
+    - 补助文件与用途说明
+    - 与资产/收益相关的划分依据
+    - 递延收益摊销表
+    - 不征税收入三条件资料
+  amount_requires_evidence: true
+risks:
+  - 不征税收入须同时满足：专项资金拨付文件、专门管理办法、单独核算，否则应计入应税收入
+  - 不征税收入形成的支出（费用、折旧、摊销）不得税前扣除
+  - 政府补助的会计处理（总额法/净额法）与税务处理可能产生税会差异
+  - 与资产相关的政府补助分摊年限需与税会一致
+output_schema:
+  gov_subsidy_total: 元，政府补助金额
+  income_related: 元，与收益相关的补助
+rag_queries:
+  - 政府补助 不征税收入 财税2011 70号 三个条件
+  - 不征税收入 对应支出 不得税前扣除

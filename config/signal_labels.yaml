@@ -1,0 +1,87 @@
+# 信号阈值的中文名与说明（审查引擎展示用）
+# key 与 config/thresholds.yaml::signals 一一对应
+p75:
+  name: 行业分位阈值
+  desc: 相对行业信号的门槛（分位，如 0.75 = P75）
+
+rd_expense_ratio_vs_industry:
+  name: 研发费用率 / 行业中位数
+  desc: 研发费用率相对行业中位数的倍数下限
+rd_cagr_3y:
+  name: 研发投入 3 年复合增长率
+  desc: 近 3 年研发投入复合增长率下限
+rd_capitalize_rate:
+  name: 研发资本化率
+  desc: 研发投入资本化比例上限（过高提示口径风险）
+
+interest_debt_ratio:
+  name: 有息负债率
+  desc: 有息负债 / 总资产 的下限
+finance_expense_ratio_vs_industry:
+  name: 财务费用率 / 行业中位数
+  desc: 财务费用率相对行业中位数的倍数下限
+
+fixed_asset_ratio:
+  name: 固定资产占比
+  desc: 固定资产净额 / 总资产 的下限
+capex_to_revenue:
+  name: 资本支出 / 营业收入
+  desc: 购建长期资产现金支出 / 营业收入 的下限
+
+gov_subsidy_to_revenue:
+  name: 政府补助 / 营业收入
+  desc: 政府补助相对收入规模的下限
+
+etr_gap:
+  name: "实际税率与名义税率之差（绝对值）"
+  desc: 实际税率与名义税率偏离的下限（绝对值）
+
+impairment_to_profit:
+  name: 减值损失 / |利润总额|
+  desc: 减值损失相对利润规模的下限
+
+payroll_to_revenue:
+  name: 职工薪酬 / 营业收入
+  desc: 人力密集度下限
+
+tax_surcharge_ratio_vs_industry:
+  name: 税金及附加占比 / 行业中位数
+  desc: 小税种税负相对行业中位数的倍数下限
+
+period_expense_ratio_vs_industry:
+  name: 期间费用率 / 行业中位数
+  desc: 期间费用率相对行业中位数的倍数下限
+
+investment_income_to_profit:
+  name: 投资收益 / |利润总额|
+  desc: 投资收益占利润结构的下限
+
+tax_cash_ratio_low:
+  name: 实缴/计提比下限
+  desc: 支付的税费 /（所得税+税金及附加）低于此值提示异常
+tax_cash_ratio_high:
+  name: 实缴/计提比上限
+  desc: 高于此值提示异常
+
+ar_to_revenue:
+  name: 应收账款 / 营业收入
+  desc: 应收占比上限
+ar_rise_years:
+  name: 应收占比上升年数
+  desc: 近 N 年应收占收入比持续上升
+
+equity_separation:
+  name: 两权分离度
+  desc: 控制权与现金流权分离度下限
+
+intangible_to_assets:
+  name: 无形资产 / 总资产
+  desc: 无形资产占比下限
+
+rou_to_assets:
+  name: 使用权资产 / 总资产
+  desc: 使用权资产占比下限
+
+related_party_ratio:
+  name: 关联交易事件占比
+  desc: 关联交易事件占比下限

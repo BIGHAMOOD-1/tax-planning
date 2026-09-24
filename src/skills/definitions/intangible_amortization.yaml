@@ -1,0 +1,43 @@
+id: intangible_amortization
+name: 无形资产摊销年限税会差异
+direction: 无形资产摊销
+goal: 评估无形资产摊销规模，提示税会摊销年限差异（税法最低10年）带来的纳税调整
+policies:
+  - 企业所得税法实施条例 第六十五条、第六十七条（无形资产摊销）
+  - 财税〔2018〕76号（外购软件缩短年限）
+data_sources:
+  - 资产负债表(050348744)
+  - 无形资产(101955005)
+eligibility:
+  facts:
+    - bs_intangible_assets
+  conditions:
+    - field: bs_intangible_assets
+      op: gt
+      value: 0
+      desc: 存在无形资产
+calculation:
+  calculator: intangible_amortization
+  facts:
+    - bs_intangible_assets
+    - d101955005__Fn02207
+    - d101955005__Fn02204
+    - nominal_tax_rate
+  adjustments:
+    - 会计摊销年限短于税法最低年限，超出部分纳税调增（时间性差异）
+    - 外购软件等可缩短年限或加速摊销
+  evidence_required:
+    - 无形资产明细及摊销政策
+    - 摊销年限依据（法律/合同/预计使用年限）
+    - 税会摊销差异台账
+  amount_requires_evidence: true
+risks:
+  - 摊销年限低于税法最低年限未调整
+  - 使用寿命不确定的无形资产会计不摊销但税务可能需摊销
+  - 研发资本化形成无形资产的摊销与加计衔接
+output_schema:
+  intangible_net: 元
+  annual_amortization_min: 元，按最低年限年摊销下限
+rag_queries:
+  - 无形资产 摊销年限 不低于10年 实施条例67条
+  - 外购软件 缩短摊销年限 加速摊销

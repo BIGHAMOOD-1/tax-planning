@@ -1,0 +1,46 @@
+id: receivable_bad_debt
+name: 应收账款与坏账损失
+direction: 应收账款
+goal: 评估应收账款规模与坏账/信用减值，提示坏账损失税前扣除的合规要求
+policies:
+  - 国家税务总局公告2011年第25号（企业资产损失所得税税前扣除管理办法）
+  - 财政部 税务总局公告2019年第64号（信用减值损失税前扣除）
+  - 企业所得税法 第十条（未经核定的准备金不得扣除）
+data_sources:
+  - 资产负债表(050348744)
+  - 利润表(050312367)
+  - 应收账款、其他应收款、预付账款明细披露(205113901)
+  - 信用减值损失明细(211210533)
+eligibility:
+  facts:
+    - bs_accounts_receivable
+  conditions:
+    - field: bs_accounts_receivable
+      op: gt
+      value: 0
+      desc: 存在应收账款
+calculation:
+  calculator: receivable_bad_debt
+  facts:
+    - bs_accounts_receivable
+    - is_credit_impairment
+    - is_revenue
+    - nominal_tax_rate
+  adjustments:
+    - 计提的坏账准备不得税前扣除
+    - 实际发生的坏账损失需按资产损失办法申报扣除
+  evidence_required:
+    - 应收账款账龄分析
+    - 坏账核销审批与税前扣除资料
+    - 信用减值明细
+  amount_requires_evidence: true
+risks:
+  - 坏账准备未纳税调增
+  - 坏账损失扣除证据不足
+  - 应收账款长期挂账的税务关注
+output_schema:
+  accounts_receivable: 元
+  ar_to_revenue: 应收账款占收入比
+rag_queries:
+  - 坏账损失 税前扣除 25号 清单申报
+  - 准备金 不得扣除 第十条
