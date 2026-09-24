@@ -179,6 +179,8 @@ def flow():
     xs, ys = [0.55, 3.65, 6.75], [5.7, 2.6]
     for idx, (num, t, d) in enumerate(steps):
         r, c = divmod(idx, cols)
+        if r == 1:                    # 第二行反向排列（蛇形），使流程为 1→2→3→4→5→6
+            c = cols - 1 - c
         x, y = xs[c], ys[r]
         col = [BLUE, PURPLE, TEAL, AMBER, GREEN, ORANGE][idx]
         ax.add_patch(FancyBboxPatch((x, y), bw, bh,
