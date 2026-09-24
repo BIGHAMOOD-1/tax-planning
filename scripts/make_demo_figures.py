@@ -179,8 +179,6 @@ def flow():
     xs, ys = [0.55, 3.65, 6.75], [5.7, 2.6]
     for idx, (num, t, d) in enumerate(steps):
         r, c = divmod(idx, cols)
-        if r == 1:                    # 第二行反向排列（蛇形），使流程为 1→2→3→4→5→6
-            c = cols - 1 - c
         x, y = xs[c], ys[r]
         col = [BLUE, PURPLE, TEAL, AMBER, GREEN, ORANGE][idx]
         ax.add_patch(FancyBboxPatch((x, y), bw, bh,
@@ -192,14 +190,20 @@ def flow():
                 ha="center", va="center", fontweight="bold")
         ax.text(x + bw / 2, y + bh - 1.42, d, fontsize=9, color="#555555",
                 ha="center", va="center")
-    def arrow(x1, y1, x2, y2):
-        ax.add_patch(FancyArrowPatch((x1, y1), (x2, y2), arrowstyle="-|>",
+    def seg(p1, p2, head=False):
+        ax.add_patch(FancyArrowPatch(p1, p2, arrowstyle=("-|>" if head else "-"),
                      mutation_scale=16, color="#9aa4b2", linewidth=1.6))
-    arrow(xs[0] + bw, ys[0] + bh / 2, xs[1], ys[0] + bh / 2)
-    arrow(xs[1] + bw, ys[0] + bh / 2, xs[2], ys[0] + bh / 2)
-    arrow(xs[2] + bw / 2, ys[0], xs[2] + bw / 2, ys[1] + bh)
-    arrow(xs[2], ys[1] + bh / 2, xs[1] + bw, ys[1] + bh / 2)
-    arrow(xs[1], ys[1] + bh / 2, xs[0] + bw, ys[1] + bh / 2)
+    # 第一行 ①→②→③（左→右）
+    seg((xs[0] + bw, ys[0] + bh / 2), (xs[1], ys[0] + bh / 2), head=True)
+    seg((xs[1] + bw, ys[0] + bh / 2), (xs[2], ys[0] + bh / 2), head=True)
+    # ③→④：在行间空隙走折线（下 → 左 → 下），不压到任何箱子
+    mid = (ys[0] + (ys[1] + bh)) / 2
+    seg((xs[2] + bw / 2, ys[0]), (xs[2] + bw / 2, mid))
+    seg((xs[2] + bw / 2, mid), (xs[0] + bw / 2, mid))
+    seg((xs[0] + bw / 2, mid), (xs[0] + bw / 2, ys[1] + bh), head=True)
+    # 第二行 ④→⑤→⑥（左→右）
+    seg((xs[0] + bw, ys[1] + bh / 2), (xs[1], ys[1] + bh / 2), head=True)
+    seg((xs[1] + bw, ys[1] + bh / 2), (xs[2], ys[1] + bh / 2), head=True)
     ax.text(5.0, 9.4, "系统怎么干活？六步走", fontsize=17, ha="center",
             fontweight="bold", color="#16233d")
     ax.text(5.0, 1.35, "重点：每一步都留下出处 —— 结论不是「拍脑袋」，而是「能查证」。",
