@@ -1,0 +1,45 @@
+{
+  "items": [
+    {
+      "id": "etr_yoy",
+      "name": "实际税率同比突变",
+      "category": "trend",
+      "direction": "所得税税会差异",
+      "kind": "observation",
+      "statement": "实际税率由上期 -56.29% 变为 27.28%（变动 148.5%）",
+      "fields": [],
+      "expected": -0.5629164309844794,
+      "actual": 0.2728080624421684,
+      "deviation": 1.4846,
+      "severity": "观察",
+      "evidence_strength": "中",
+      "gate": true,
+      "note": "趋势类·观察",
+      "evidence_needed": [
+        "纳税调整明细表"
+      ],
+      "category_cn": "趋势类"
+    },
+    {
+      "id": "interest",
+      "name": "利息支出与推算值差异",
+      "category": "estimate",
+      "direction": "融资筹划",
+      "kind": "observation",
+      "statement": "利息支出（123,570,348）与有息负债×基准利率（14,665,484）差异 88.1%",
+      "fields": [],
+      "expected": 14665484.373,
+      "actual": 123570347.74,
+      "deviation": 0.8813,
+      "severity": "观察",
+      "evidence_strength": "中",
+      "gate": true,
+      "note": "推算类·观察",
+      "evidence_needed": [
+        "关联方借款明细",
+        "同期同类贷款利率证明"
+      ],
+      "category_cn": "推算类"
+    }
+  ]
+}

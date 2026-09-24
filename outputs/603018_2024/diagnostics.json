@@ -1,0 +1,46 @@
+{
+  "items": [
+    {
+      "id": "ar_ratio",
+      "name": "应收账款占比偏离基准",
+      "category": "estimate",
+      "direction": "应收账款",
+      "kind": "observation",
+      "statement": "应收账款/营业收入 = 86.90%（基准 20%）",
+      "fields": [],
+      "expected": 0.2,
+      "actual": 0.8690279142909869,
+      "deviation": 3.3451,
+      "severity": "关注",
+      "evidence_strength": "中",
+      "gate": true,
+      "note": "推算类·关注",
+      "evidence_needed": [
+        "应收账款账龄分析"
+      ],
+      "category_cn": "推算类"
+    },
+    {
+      "id": "rou_depreciation",
+      "name": "使用权资产与本期减少偏低（待核实）",
+      "category": "estimate",
+      "direction": "租赁",
+      "kind": "observation",
+      "statement": "使用权资产与本期减少偏低（待核实）：存量 841,960,460 元，本期流量 174,561,115 元，按基准比例 5% 推算应约 42,098,023 元（偏差 75.9%）；该字段含处置/转出，非纯折旧，仅作观察、需以租赁附注核实",
+      "fields": [],
+      "expected": 42098022.978,
+      "actual": 174561114.76,
+      "deviation": 0.7588,
+      "severity": "提示",
+      "evidence_strength": "中",
+      "gate": false,
+      "note": "推算类·提示",
+      "evidence_needed": [
+        "租赁合同与租赁期",
+        "使用权资产折旧与租赁负债利息计算表",
+        "税会差异台账"
+      ],
+      "category_cn": "推算类"
+    }
+  ]
+}

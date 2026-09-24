@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-09-21 20:20:16",
+  "stock_code": "600004",
+  "year": 2021,
+  "name": "白云机场",
+  "llm_model": "deepseek-chat",
+  "llm_source": "llm",
+  "rag_backend": "embedding",
+  "hybrid": true,
+  "top_k": 8,
+  "case_top_k": 3,
+  "candidates": 40,
+  "evidence_review_rounds": 2,
+  "early_stop": true,
+  "direction_funnel": {
+    "recon": 19,
+    "analyzed": 5,
+    "excluded": 2,
+    "recommend": 0,
+    "conditional": 3
+  },
+  "pool_summaries": [
+    {
+      "direction": "折旧摊销",
+      "company_facts": 7,
+      "related_fields": 9,
+      "policies": 9,
+      "cases": 5
+    },
+    {
+      "direction": "政府补助",
+      "company_facts": 2,
+      "related_fields": 7,
+      "policies": 11,
+      "cases": 5
+    },
+    {
+      "direction": "融资筹划",
+      "company_facts": 5,
+      "related_fields": 8,
+      "policies": 9,
+      "cases": 7
+    },
+    {
+      "direction": "投资收益",
+      "company_facts": 3,
+      "related_fields": 7,
+      "policies": 11,
+      "cases": 9
+    },
+    {
+      "direction": "税负现金流",
+      "company_facts": 4,
+      "related_fields": 5,
+      "policies": 10,
+      "cases": 7
+    }
+  ]
+}

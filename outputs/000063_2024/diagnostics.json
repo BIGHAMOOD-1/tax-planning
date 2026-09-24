@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "id": "rou_depreciation",
+      "name": "使用权资产与本期减少偏低（待核实）",
+      "category": "estimate",
+      "direction": "租赁",
+      "kind": "observation",
+      "statement": "使用权资产与本期减少偏低（待核实）：存量 11,313,032,000 元，本期流量 122,860,000 元，按基准比例 5% 推算应约 565,651,600 元（偏差 78.3%）；该字段含处置/转出，非纯折旧，仅作观察、需以租赁附注核实",
+      "fields": [],
+      "expected": 565651600.0,
+      "actual": 122860000.0,
+      "deviation": 0.7828,
+      "severity": "提示",
+      "evidence_strength": "中",
+      "gate": false,
+      "note": "推算类·提示",
+      "evidence_needed": [
+        "租赁合同与租赁期",
+        "使用权资产折旧与租赁负债利息计算表",
+        "税会差异台账"
+      ],
+      "category_cn": "推算类"
+    }
+  ]
+}

@@ -1,0 +1,1125 @@
+{
+  "opportunities": [
+    {
+      "direction": "研发筹划",
+      "confidence": 0.8,
+      "evidence_fields": [
+        "rd_spend_sum",
+        "rd_expense_ratio",
+        "rd_spend_ratio"
+      ],
+      "evidence_values": {
+        "rd_spend_sum": 40208372.49,
+        "rd_expense_ratio": 0.007761876933954985,
+        "rd_spend_ratio": 0.007761876933954985
+      },
+      "data_gaps": [
+        "rd_person"
+      ],
+      "rationale": "研发投入 40208372 元，研发费用率 0.007761876933954985，存在加计扣除空间",
+      "discovery_source": "rule+llm"
+    },
+    {
+      "direction": "融资筹划",
+      "confidence": 0.7,
+      "evidence_fields": [
+        "finance_expense_ratio",
+        "interest_debt_ratio",
+        "implied_interest_rate"
+      ],
+      "evidence_values": {
+        "finance_expense_ratio": 0.01767553986821117,
+        "interest_debt_ratio": 0.010648369954979645,
+        "implied_interest_rate": 0.42129651021789677
+      },
+      "data_gaps": [
+        "关联方借款明细"
+      ],
+      "rationale": "有息负债率 0.010648369954979645，财务费用率 0.01767553986821117，存在利息扣除与资本弱化关注点",
+      "discovery_source": "rule+llm+diagnostic"
+    },
+    {
+      "direction": "资产筹划",
+      "confidence": 0.55,
+      "evidence_fields": [
+        "bs_fixed_assets",
+        "cf_capex",
+        "fixed_asset_ratio"
+      ],
+      "evidence_values": {
+        "bs_fixed_assets": 19398670497.75,
+        "cf_capex": 1254643608.06,
+        "fixed_asset_ratio": 0.7042529753571856
+      },
+      "data_gaps": [],
+      "rationale": "存在固定资产及资本支出，可核查加速折旧/一次性扣除政策",
+      "discovery_source": "rule"
+    },
+    {
+      "direction": "政府补助",
+      "confidence": 0.9,
+      "evidence_fields": [
+        "gov_subsidy_total",
+        "gov_subsidy_ratio"
+      ],
+      "evidence_values": {
+        "gov_subsidy_total": 50466620.94,
+        "gov_subsidy_ratio": 0.009742142662109914
+      },
+      "data_gaps": [],
+      "rationale": "取得政府补助 50466621 元，需核查不征税收入与应税收入处理",
+      "discovery_source": "rule+llm"
+    },
+    {
+      "direction": "职工薪酬",
+      "confidence": 0.4,
+      "evidence_fields": [
+        "employee_compensation_base",
+        "bs_payroll_payable"
+      ],
+      "evidence_values": {
+        "employee_compensation_base": 135279638.07,
+        "bs_payroll_payable": 135279638.07
+      },
+      "data_gaps": [],
+      "rationale": "存在职工薪酬计提，可核查工资薪金及三项经费扣除",
+      "discovery_source": "rule"
+    },
+    {
+      "direction": "所得税税会差异",
+      "confidence": 0.6,
+      "evidence_fields": [
+        "etr",
+        "nominal_tax_rate",
+        "is_income_tax",
+        "is_total_profit"
+      ],
+      "evidence_values": {
+        "etr": 0.2728080624421684,
+        "nominal_tax_rate": 15.0,
+        "is_income_tax": -144586198.58,
+        "is_total_profit": -529992395.7
+      },
+      "data_gaps": [],
+      "rationale": "实际税率 27.28% 与名义税率 15.0% 存在差异，需分析税会差异",
+      "discovery_source": "rule+diagnostic"
+    },
+    {
+      "direction": "增值税",
+      "confidence": 0.6,
+      "evidence_fields": [
+        "vat_rate",
+        "is_revenue",
+        "cf_tax_paid",
+        "bs_tax_payable"
+      ],
+      "evidence_values": {
+        "vat_rate": 0.0,
+        "is_revenue": 5180238340.82,
+        "cf_tax_paid": 246875566.69,
+        "bs_tax_payable": 72486092.64
+      },
+      "data_gaps": [],
+      "rationale": "存在营业收入与增值税名义税率，可核查增值税税负水平与留抵",
+      "discovery_source": "rule+llm"
+    },
+    {
+      "direction": "费用扣除",
+      "confidence": 0.45,
+      "evidence_fields": [
+        "is_admin_expense",
+        "is_selling_expense",
+        "expense_ratio",
+        "is_revenue"
+      ],
+      "evidence_values": {
+        "is_admin_expense": 340519520.4,
+        "is_selling_expense": 75737610.51,
+        "expense_ratio": null,
+        "is_revenue": 5180238340.82
+      },
+      "data_gaps": [],
+      "rationale": "存在期间费用，需关注业务招待费/广告宣传费限额扣除",
+      "discovery_source": "rule"
+    },
+    {
+      "direction": "折旧摊销",
+      "confidence": 0.8,
+      "evidence_fields": [
+        "bs_fixed_assets",
+        "bs_intangible_assets",
+        "csmar__NonDebtTaxShield"
+      ],
+      "evidence_values": {
+        "bs_fixed_assets": 19398670497.75,
+        "bs_intangible_assets": 382543722.7,
+        "csmar__NonDebtTaxShield": 0.057938
+      },
+      "data_gaps": [],
+      "rationale": "固定资产/无形资产规模较大，存在折旧摊销税会差异",
+      "discovery_source": "rule+llm"
+    },
+    {
+      "direction": "投资收益",
+      "confidence": 0.45,
+      "evidence_fields": [
+        "is_investment_income",
+        "d205404528__Fn01804"
+      ],
+      "evidence_values": {
+        "is_investment_income": 116679760.53,
+        "d205404528__Fn01804": null
+      },
+      "data_gaps": [],
+      "rationale": "存在投资收益，需区分股息红利与股权转让所得",
+      "discovery_source": "rule"
+    },
+    {
+      "direction": "税负现金流",
+      "confidence": 0.4,
+      "evidence_fields": [
+        "cf_tax_paid",
+        "bs_tax_payable",
+        "is_income_tax"
+      ],
+      "evidence_values": {
+        "cf_tax_paid": 246875566.69,
+        "bs_tax_payable": 72486092.64,
+        "is_income_tax": -144586198.58
+      },
+      "data_gaps": [],
+      "rationale": "存在税费现金支出，可分析实缴与计提差异",
+      "discovery_source": "rule"
+    },
+    {
+      "direction": "应收账款",
+      "confidence": 0.4,
+      "evidence_fields": [
+        "bs_accounts_receivable",
+        "is_credit_impairment",
+        "is_revenue"
+      ],
+      "evidence_values": {
+        "bs_accounts_receivable": 1272619920.66,
+        "is_credit_impairment": -35003480.11,
+        "is_revenue": 5180238340.82
+      },
+      "data_gaps": [],
+      "rationale": "应收账款占收入比较高，需关注坏账与信用减值",
+      "discovery_source": "rule"
+    },
+    {
+      "direction": "小税种",
+      "confidence": 0.35,
+      "evidence_fields": [
+        "is_tax_surcharge",
+        "vat_rate"
+      ],
+      "evidence_values": {
+        "is_tax_surcharge": 88856425.04,
+        "vat_rate": 0.0
+      },
+      "data_gaps": [],
+      "rationale": "存在税金及附加，可核查房产税/土地增值税/印花税等",
+      "discovery_source": "rule"
+    },
+    {
+      "direction": "股权结构",
+      "confidence": 0.35,
+      "evidence_fields": [
+        "equity_nature",
+        "largest_holder_rate",
+        "top_ten_holders_rate",
+        "separation"
+      ],
+      "evidence_values": {
+        "equity_nature": "国企",
+        "largest_holder_rate": 57.2,
+        "top_ten_holders_rate": 65.82,
+        "separation": 21.828
+      },
+      "data_gaps": [],
+      "rationale": "存在股权结构信息，可分析控股股东与两权分离",
+      "discovery_source": "rule"
+    },
+    {
+      "direction": "无形资产摊销",
+      "confidence": 0.4,
+      "evidence_fields": [
+        "bs_intangible_assets",
+        "d101955005__Fn02207",
+        "d101955005__Fn02204"
+      ],
+      "evidence_values": {
+        "bs_intangible_assets": 382543722.7,
+        "d101955005__Fn02207": 1268535824.18,
+        "d101955005__Fn02204": 7839671.82
+      },
+      "data_gaps": [],
+      "rationale": "存在无形资产，需关注摊销年限税会差异（税法最低10年）",
+      "discovery_source": "rule"
+    },
+    {
+      "direction": "租赁",
+      "confidence": 0.4,
+      "evidence_fields": [
+        "d205618410__EndingBalance",
+        "d210441016__EndingBalance",
+        "bs_lease_liability"
+      ],
+      "evidence_values": {
+        "d205618410__EndingBalance": 15493190108.52,
+        "d210441016__EndingBalance": 3306982478.76,
+        "bs_lease_liability": 2309456426.51
+      },
+      "data_gaps": [],
+      "rationale": "存在使用权资产/租赁负债，涉及经营租赁税会差异",
+      "discovery_source": "rule"
+    },
+    {
+      "direction": "政府补助不征税",
+      "confidence": 0.7,
+      "evidence_fields": [
+        "gov_subsidy_total",
+        "is_net_profit"
+      ],
+      "evidence_values": {
+        "gov_subsidy_total": 50466620.94,
+        "is_net_profit": -385406197.12
+      },
+      "data_gaps": [
+        "补助是否符合不征税条件",
+        "资金拨付文件"
+      ],
+      "rationale": "政府补助金额较大，若符合不征税收入条件，可降低当期应纳税所得额，但需注意对应支出不得扣除，需进一步调查。",
+      "discovery_source": "llm"
+    },
+    {
+      "direction": "高新技术企业",
+      "confidence": 0.6,
+      "evidence_fields": [
+        "is_hightech",
+        "nominal_tax_rate",
+        "etr",
+        "rd_expense_ratio"
+      ],
+      "evidence_values": {
+        "is_hightech": null,
+        "nominal_tax_rate": 15.0,
+        "etr": 0.2728080624421684,
+        "rd_expense_ratio": 0.007761876933954985
+      },
+      "data_gaps": [
+        "是否已认定高新技术企业",
+        "研发人员占比",
+        "高新技术产品收入占比"
+      ],
+      "rationale": "名义税率15%暗示可能为高新技术企业，但实际税率27.28%远高于15%，可能存在纳税调整或未享受优惠，需调查高新技术企业资格及优惠享受情况。",
+      "discovery_source": "llm"
+    },
+    {
+      "direction": "亏损弥补",
+      "confidence": 0.9,
+      "evidence_fields": [
+        "is_net_profit"
+      ],
+      "evidence_values": {
+        "is_net_profit": -385406197.12
+      },
+      "data_gaps": [
+        "以前年度亏损情况",
+        "亏损弥补期限"
+      ],
+      "rationale": "净利润为-3.85亿元，存在亏损，可能涉及亏损结转弥补的税务处理，值得调查亏损弥补的合规性及筹划空间。",
+      "discovery_source": "llm"
+    }
+  ],
+  "watchlist": [
+    {
+      "direction": "研发筹划",
+      "gate": {
+        "direction": "研发筹划",
+        "level": 1,
+        "status": "WATCH",
+        "signals": [
+          {
+            "name": "存在研发投入",
+            "passed": true,
+            "value": 40208372.49,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "研发投入规模≥1亿元",
+            "passed": false,
+            "value": 40208372.49,
+            "threshold": 100000000.0,
+            "desc": "绝对规模",
+            "level": "anomaly",
+            "core": true
+          },
+          {
+            "name": "研发费用率行业分位≥P75",
+            "passed": true,
+            "value": 0.8,
+            "threshold": 0.75,
+            "desc": "相对行业（辅助）",
+            "level": "anomaly",
+            "core": false
+          }
+        ],
+        "reasons": [
+          "仅命中辅助异常信号（核心异常 0/1），关键异常未成立，降为待观察"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 1,
+        "core_anomaly_count": 0,
+        "policy_match": true,
+        "industry": "航空运输业",
+        "level_name": "L1 异常信号"
+      },
+      "opportunity": {
+        "direction": "研发筹划",
+        "confidence": 0.8,
+        "evidence_fields": [
+          "rd_spend_sum",
+          "rd_expense_ratio",
+          "rd_spend_ratio"
+        ],
+        "evidence_values": {
+          "rd_spend_sum": 40208372.49,
+          "rd_expense_ratio": 0.007761876933954985,
+          "rd_spend_ratio": 0.007761876933954985
+        },
+        "data_gaps": [
+          "rd_person"
+        ],
+        "rationale": "研发投入 40208372 元，研发费用率 0.007761876933954985，存在加计扣除空间",
+        "discovery_source": "rule+llm"
+      },
+      "note": "Skill `rnd_super_deduction` 政策生效期不适用（effective_from=2023-01-01 ~ effective_to=）"
+    },
+    {
+      "direction": "资产筹划",
+      "gate": {
+        "direction": "资产筹划",
+        "level": 2,
+        "status": "PASS",
+        "signals": [
+          {
+            "name": "存在固定资产",
+            "passed": true,
+            "value": 19398670497.75,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "固定资产占比≥10%",
+            "passed": true,
+            "value": 0.7043,
+            "threshold": 0.1,
+            "desc": "资产结构",
+            "level": "anomaly",
+            "core": true
+          },
+          {
+            "name": "资本支出/营业收入≥5%",
+            "passed": true,
+            "value": 0.2422,
+            "threshold": 0.05,
+            "desc": "资本开支强度",
+            "level": "anomaly",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "命中 2 条异常信号且关键数据齐全"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 2,
+        "core_anomaly_count": 2,
+        "policy_match": true,
+        "industry": "航空运输业",
+        "level_name": "L2 政策匹配"
+      },
+      "opportunity": {
+        "direction": "资产筹划",
+        "confidence": 0.55,
+        "evidence_fields": [
+          "bs_fixed_assets",
+          "cf_capex",
+          "fixed_asset_ratio"
+        ],
+        "evidence_values": {
+          "bs_fixed_assets": 19398670497.75,
+          "cf_capex": 1254643608.06,
+          "fixed_asset_ratio": 0.7042529753571856
+        },
+        "data_gaps": [],
+        "rationale": "存在固定资产及资本支出，可核查加速折旧/一次性扣除政策",
+        "discovery_source": "rule"
+      },
+      "note": "Skill `fixed_asset_accelerated` 政策生效期不适用（effective_from=2023-01-01 ~ effective_to=）"
+    },
+    {
+      "direction": "应收账款",
+      "gate": {
+        "direction": "应收账款",
+        "level": 2,
+        "status": "PASS",
+        "signals": [
+          {
+            "name": "存在应收账款",
+            "passed": true,
+            "value": 1272619920.66,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "应收账款/营业收入≥20%",
+            "passed": true,
+            "value": 0.2457,
+            "threshold": 0.2,
+            "desc": "占比",
+            "level": "anomaly",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "命中 1 条异常信号且关键数据齐全"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 1,
+        "core_anomaly_count": 1,
+        "policy_match": true,
+        "industry": "航空运输业",
+        "level_name": "L2 政策匹配"
+      },
+      "opportunity": {
+        "direction": "应收账款",
+        "confidence": 0.4,
+        "evidence_fields": [
+          "bs_accounts_receivable",
+          "is_credit_impairment",
+          "is_revenue"
+        ],
+        "evidence_values": {
+          "bs_accounts_receivable": 1272619920.66,
+          "is_credit_impairment": -35003480.11,
+          "is_revenue": 5180238340.82
+        },
+        "data_gaps": [],
+        "rationale": "应收账款占收入比较高，需关注坏账与信用减值",
+        "discovery_source": "rule"
+      },
+      "note": "L2 政策匹配但超出深度分析配额（前 5 个）"
+    },
+    {
+      "direction": "租赁",
+      "gate": {
+        "direction": "租赁",
+        "level": 2,
+        "status": "PASS",
+        "signals": [
+          {
+            "name": "存在使用权资产/租赁负债",
+            "passed": true,
+            "value": 15493190108.52,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "使用权资产/总资产≥5%",
+            "passed": true,
+            "value": 0.5625,
+            "threshold": 0.05,
+            "desc": "租赁规模",
+            "level": "anomaly",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "命中 1 条异常信号且关键数据齐全"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 1,
+        "core_anomaly_count": 1,
+        "policy_match": true,
+        "industry": "航空运输业",
+        "level_name": "L2 政策匹配"
+      },
+      "opportunity": {
+        "direction": "租赁",
+        "confidence": 0.4,
+        "evidence_fields": [
+          "d205618410__EndingBalance",
+          "d210441016__EndingBalance",
+          "bs_lease_liability"
+        ],
+        "evidence_values": {
+          "d205618410__EndingBalance": 15493190108.52,
+          "d210441016__EndingBalance": 3306982478.76,
+          "bs_lease_liability": 2309456426.51
+        },
+        "data_gaps": [],
+        "rationale": "存在使用权资产/租赁负债，涉及经营租赁税会差异",
+        "discovery_source": "rule"
+      },
+      "note": "L2 政策匹配但超出深度分析配额（前 5 个）"
+    },
+    {
+      "direction": "股权结构",
+      "gate": {
+        "direction": "股权结构",
+        "level": 2,
+        "status": "PASS",
+        "signals": [
+          {
+            "name": "存在股权结构信息",
+            "passed": true,
+            "value": 21.828,
+            "threshold": null,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "两权分离度≥20%",
+            "passed": true,
+            "value": 21.828,
+            "threshold": 0.2,
+            "desc": "治理结构",
+            "level": "anomaly",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "命中 1 条异常信号且关键数据齐全"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 1,
+        "core_anomaly_count": 1,
+        "policy_match": true,
+        "industry": "航空运输业",
+        "level_name": "L2 政策匹配"
+      },
+      "opportunity": {
+        "direction": "股权结构",
+        "confidence": 0.35,
+        "evidence_fields": [
+          "equity_nature",
+          "largest_holder_rate",
+          "top_ten_holders_rate",
+          "separation"
+        ],
+        "evidence_values": {
+          "equity_nature": "国企",
+          "largest_holder_rate": 57.2,
+          "top_ten_holders_rate": 65.82,
+          "separation": 21.828
+        },
+        "data_gaps": [],
+        "rationale": "存在股权结构信息，可分析控股股东与两权分离",
+        "discovery_source": "rule"
+      },
+      "note": "L2 政策匹配但超出深度分析配额（前 5 个）"
+    }
+  ],
+  "candidates": [
+    {
+      "direction": "职工薪酬",
+      "gate": {
+        "direction": "职工薪酬",
+        "level": 0,
+        "status": "CANDIDATE",
+        "signals": [
+          {
+            "name": "存在职工薪酬",
+            "passed": true,
+            "value": 135279638.07,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "职工薪酬/营业收入≥5%",
+            "passed": false,
+            "value": 0.0261,
+            "threshold": 0.05,
+            "desc": "人力密集度",
+            "level": "anomaly",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "仅事实存在（Level 0），未命中异常信号"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 0,
+        "core_anomaly_count": 0,
+        "policy_match": true,
+        "industry": "航空运输业",
+        "level_name": "L0 事实存在"
+      },
+      "opportunity": {
+        "direction": "职工薪酬",
+        "confidence": 0.4,
+        "evidence_fields": [
+          "employee_compensation_base",
+          "bs_payroll_payable"
+        ],
+        "evidence_values": {
+          "employee_compensation_base": 135279638.07,
+          "bs_payroll_payable": 135279638.07
+        },
+        "data_gaps": [],
+        "rationale": "存在职工薪酬计提，可核查工资薪金及三项经费扣除",
+        "discovery_source": "rule"
+      }
+    },
+    {
+      "direction": "增值税",
+      "gate": {
+        "direction": "增值税",
+        "level": 0,
+        "status": "CANDIDATE",
+        "signals": [
+          {
+            "name": "存在增值税业务（营业收入>0）",
+            "passed": true,
+            "value": 5180238340.82,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "税费现金比显著异常(≤0.3% 或 ≥12%)",
+            "passed": false,
+            "value": 0.0477,
+            "threshold": "0.3%~12%",
+            "desc": "税负异常",
+            "level": "anomaly",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "仅事实存在（Level 0），未命中异常信号"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 0,
+        "core_anomaly_count": 0,
+        "policy_match": true,
+        "industry": "航空运输业",
+        "level_name": "L0 事实存在"
+      },
+      "opportunity": {
+        "direction": "增值税",
+        "confidence": 0.6,
+        "evidence_fields": [
+          "vat_rate",
+          "is_revenue",
+          "cf_tax_paid",
+          "bs_tax_payable"
+        ],
+        "evidence_values": {
+          "vat_rate": 0.0,
+          "is_revenue": 5180238340.82,
+          "cf_tax_paid": 246875566.69,
+          "bs_tax_payable": 72486092.64
+        },
+        "data_gaps": [],
+        "rationale": "存在营业收入与增值税名义税率，可核查增值税税负水平与留抵",
+        "discovery_source": "rule+llm"
+      }
+    },
+    {
+      "direction": "费用扣除",
+      "gate": {
+        "direction": "费用扣除",
+        "level": 0,
+        "status": "CANDIDATE",
+        "signals": [
+          {
+            "name": "存在期间费用",
+            "passed": true,
+            "value": null,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "业务招待费/营业收入≥0.5%",
+            "passed": false,
+            "value": 0.0003,
+            "threshold": 0.005,
+            "desc": "限额风险",
+            "level": "anomaly",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "仅事实存在（Level 0），未命中异常信号"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 0,
+        "core_anomaly_count": 0,
+        "policy_match": true,
+        "industry": "航空运输业",
+        "level_name": "L0 事实存在"
+      },
+      "opportunity": {
+        "direction": "费用扣除",
+        "confidence": 0.45,
+        "evidence_fields": [
+          "is_admin_expense",
+          "is_selling_expense",
+          "expense_ratio",
+          "is_revenue"
+        ],
+        "evidence_values": {
+          "is_admin_expense": 340519520.4,
+          "is_selling_expense": 75737610.51,
+          "expense_ratio": null,
+          "is_revenue": 5180238340.82
+        },
+        "data_gaps": [],
+        "rationale": "存在期间费用，需关注业务招待费/广告宣传费限额扣除",
+        "discovery_source": "rule"
+      }
+    },
+    {
+      "direction": "小税种",
+      "gate": {
+        "direction": "小税种",
+        "level": 0,
+        "status": "CANDIDATE",
+        "signals": [
+          {
+            "name": "存在税金及附加",
+            "passed": true,
+            "value": 88856425.04,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "仅事实存在（Level 0），未命中异常信号"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 0,
+        "core_anomaly_count": 0,
+        "policy_match": true,
+        "industry": "航空运输业",
+        "level_name": "L0 事实存在"
+      },
+      "opportunity": {
+        "direction": "小税种",
+        "confidence": 0.35,
+        "evidence_fields": [
+          "is_tax_surcharge",
+          "vat_rate"
+        ],
+        "evidence_values": {
+          "is_tax_surcharge": 88856425.04,
+          "vat_rate": 0.0
+        },
+        "data_gaps": [],
+        "rationale": "存在税金及附加，可核查房产税/土地增值税/印花税等",
+        "discovery_source": "rule"
+      }
+    },
+    {
+      "direction": "无形资产摊销",
+      "gate": {
+        "direction": "无形资产摊销",
+        "level": 0,
+        "status": "CANDIDATE",
+        "signals": [
+          {
+            "name": "存在无形资产",
+            "passed": true,
+            "value": 382543722.7,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "无形资产/总资产≥5%",
+            "passed": false,
+            "value": 0.0139,
+            "threshold": 0.05,
+            "desc": "资产结构",
+            "level": "anomaly",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "仅事实存在（Level 0），未命中异常信号"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 0,
+        "core_anomaly_count": 0,
+        "policy_match": true,
+        "industry": "航空运输业",
+        "level_name": "L0 事实存在"
+      },
+      "opportunity": {
+        "direction": "无形资产摊销",
+        "confidence": 0.4,
+        "evidence_fields": [
+          "bs_intangible_assets",
+          "d101955005__Fn02207",
+          "d101955005__Fn02204"
+        ],
+        "evidence_values": {
+          "bs_intangible_assets": 382543722.7,
+          "d101955005__Fn02207": 1268535824.18,
+          "d101955005__Fn02204": 7839671.82
+        },
+        "data_gaps": [],
+        "rationale": "存在无形资产，需关注摊销年限税会差异（税法最低10年）",
+        "discovery_source": "rule"
+      }
+    },
+    {
+      "direction": "高新技术企业",
+      "gate": {
+        "direction": "高新技术企业",
+        "level": 0,
+        "status": "CANDIDATE",
+        "signals": [
+          {
+            "name": "存在研发活动",
+            "passed": true,
+            "value": 40208372.49,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "研发投入占收入≥3%（认定门槛）",
+            "passed": false,
+            "value": 0.0078,
+            "threshold": 0.03,
+            "desc": "政策门槛",
+            "level": "anomaly",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "仅事实存在（Level 0），未命中异常信号"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 0,
+        "core_anomaly_count": 0,
+        "policy_match": false,
+        "industry": "航空运输业",
+        "level_name": "L0 事实存在"
+      },
+      "opportunity": {
+        "direction": "高新技术企业",
+        "confidence": 0.6,
+        "evidence_fields": [
+          "is_hightech",
+          "nominal_tax_rate",
+          "etr",
+          "rd_expense_ratio"
+        ],
+        "evidence_values": {
+          "is_hightech": null,
+          "nominal_tax_rate": 15.0,
+          "etr": 0.2728080624421684,
+          "rd_expense_ratio": 0.007761876933954985
+        },
+        "data_gaps": [
+          "是否已认定高新技术企业",
+          "研发人员占比",
+          "高新技术产品收入占比"
+        ],
+        "rationale": "名义税率15%暗示可能为高新技术企业，但实际税率27.28%远高于15%，可能存在纳税调整或未享受优惠，需调查高新技术企业资格及优惠享受情况。",
+        "discovery_source": "llm"
+      }
+    },
+    {
+      "direction": "亏损弥补",
+      "gate": {
+        "direction": "亏损弥补",
+        "level": 0,
+        "status": "CANDIDATE",
+        "signals": [
+          {
+            "name": "存在未分配利润",
+            "passed": true,
+            "value": 5084535786.25,
+            "threshold": null,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "未分配利润为负（可能含可弥补亏损）",
+            "passed": false,
+            "value": 5084535786.25,
+            "threshold": 0,
+            "desc": "累计亏损",
+            "level": "anomaly",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "仅事实存在（Level 0），未命中异常信号"
+        ],
+        "existence_count": 1,
+        "anomaly_count": 0,
+        "core_anomaly_count": 0,
+        "policy_match": false,
+        "industry": "航空运输业",
+        "level_name": "L0 事实存在"
+      },
+      "opportunity": {
+        "direction": "亏损弥补",
+        "confidence": 0.9,
+        "evidence_fields": [
+          "is_net_profit"
+        ],
+        "evidence_values": {
+          "is_net_profit": -385406197.12
+        },
+        "data_gaps": [
+          "以前年度亏损情况",
+          "亏损弥补期限"
+        ],
+        "rationale": "净利润为-3.85亿元，存在亏损，可能涉及亏损结转弥补的税务处理，值得调查亏损弥补的合规性及筹划空间。",
+        "discovery_source": "llm"
+      }
+    }
+  ],
+  "excluded": [
+    {
+      "direction": "所得税税会差异",
+      "gate": {
+        "direction": "所得税税会差异",
+        "level": -1,
+        "status": "NO_BASIS",
+        "signals": [
+          {
+            "name": "存在所得税费用",
+            "passed": false,
+            "value": -144586198.58,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          },
+          {
+            "name": "|实际税率-名义税率|≥3%",
+            "passed": true,
+            "value": 0.1228,
+            "threshold": 0.03,
+            "desc": "税会差异",
+            "level": "anomaly",
+            "core": true
+          },
+          {
+            "name": "观察信号：实际税率同比突变",
+            "passed": true,
+            "value": 1.4846,
+            "threshold": null,
+            "desc": "实际税率由上期 -56.29% 变为 27.28%（变动 148.5%）",
+            "level": "anomaly",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "不满足事实存在（Level 0）"
+        ],
+        "existence_count": 0,
+        "anomaly_count": 2,
+        "core_anomaly_count": 2,
+        "policy_match": false,
+        "industry": "航空运输业",
+        "level_name": "排除"
+      },
+      "opportunity": {
+        "direction": "所得税税会差异",
+        "confidence": 0.6,
+        "evidence_fields": [
+          "etr",
+          "nominal_tax_rate",
+          "is_income_tax",
+          "is_total_profit"
+        ],
+        "evidence_values": {
+          "etr": 0.2728080624421684,
+          "nominal_tax_rate": 15.0,
+          "is_income_tax": -144586198.58,
+          "is_total_profit": -529992395.7
+        },
+        "data_gaps": [],
+        "rationale": "实际税率 27.28% 与名义税率 15.0% 存在差异，需分析税会差异",
+        "discovery_source": "rule+diagnostic"
+      }
+    },
+    {
+      "direction": "政府补助不征税",
+      "gate": {
+        "direction": "政府补助不征税",
+        "level": -1,
+        "status": "NO_BASIS",
+        "signals": [
+          {
+            "name": "存在与收益相关补助",
+            "passed": false,
+            "value": null,
+            "threshold": 0,
+            "desc": "事实存在",
+            "level": "existence",
+            "core": true
+          }
+        ],
+        "reasons": [
+          "不满足事实存在（Level 0）"
+        ],
+        "existence_count": 0,
+        "anomaly_count": 0,
+        "core_anomaly_count": 0,
+        "policy_match": true,
+        "industry": "航空运输业",
+        "level_name": "排除"
+      },
+      "opportunity": {
+        "direction": "政府补助不征税",
+        "confidence": 0.7,
+        "evidence_fields": [
+          "gov_subsidy_total",
+          "is_net_profit"
+        ],
+        "evidence_values": {
+          "gov_subsidy_total": 50466620.94,
+          "is_net_profit": -385406197.12
+        },
+        "data_gaps": [
+          "补助是否符合不征税条件",
+          "资金拨付文件"
+        ],
+        "rationale": "政府补助金额较大，若符合不征税收入条件，可降低当期应纳税所得额，但需注意对应支出不得扣除，需进一步调查。",
+        "discovery_source": "llm"
+      }
+    }
+  ]
+}

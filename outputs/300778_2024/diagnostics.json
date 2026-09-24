@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "id": "ar_ratio",
+      "name": "应收账款占比偏离基准",
+      "category": "estimate",
+      "direction": "应收账款",
+      "kind": "observation",
+      "statement": "应收账款/营业收入 = 93.18%（基准 20%）",
+      "fields": [],
+      "expected": 0.2,
+      "actual": 0.931839556701122,
+      "deviation": 3.6592,
+      "severity": "关注",
+      "evidence_strength": "中",
+      "gate": true,
+      "note": "推算类·关注",
+      "evidence_needed": [
+        "应收账款账龄分析"
+      ],
+      "category_cn": "推算类"
+    },
+    {
+      "id": "etr_yoy",
+      "name": "实际税率同比突变",
+      "category": "trend",
+      "direction": "所得税税会差异",
+      "kind": "observation",
+      "statement": "实际税率由上期 18.25% 变为 -3.23%（变动 117.7%）",
+      "fields": [],
+      "expected": 0.1825192924450391,
+      "actual": -0.03231630558255923,
+      "deviation": 1.1771,
+      "severity": "观察",
+      "evidence_strength": "中",
+      "gate": true,
+      "note": "趋势类·观察",
+      "evidence_needed": [
+        "纳税调整明细表"
+      ],
+      "category_cn": "趋势类"
+    },
+    {
+      "id": "gov_subsidy",
+      "name": "政府补助与利润表确认差异",
+      "category": "timing",
+      "direction": "政府补助",
+      "kind": "observation",
+      "statement": "政府补助（368,317）与其他收益+营业外收入（3,368,597）差异 89.1%",
+      "fields": [],
+      "expected": 3368597.3200000003,
+      "actual": 368317.07,
+      "deviation": 0.8907,
+      "severity": "观察",
+      "evidence_strength": "中",
+      "gate": true,
+      "note": "确认类·观察",
+      "evidence_needed": [
+        "补助文件与会计处理"
+      ],
+      "category_cn": "确认类"
+    }
+  ]
+}

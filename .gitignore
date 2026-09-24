@@ -13,7 +13,7 @@ frontend/node_modules/
 frontend/dist/
 
 # 运行产物（仅根目录）
-/outputs/
+/outputs/_jobs/
 /data_processed/
 /knowledge/
 

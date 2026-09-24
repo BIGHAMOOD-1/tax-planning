@@ -1,0 +1,287 @@
+{
+  "analysis_meta": {
+    "stock_code": "920208",
+    "year": 2024,
+    "name": "青矩技术",
+    "industry": "专业技术服务业",
+    "generated_at": "2026-09-21 21:07:36",
+    "opportunity_source": "union"
+  },
+  "brief": "费用扣除：推荐（确认影响 118.69 万元）",
+  "enterprise_summary": {
+    "short_name": "青矩技术",
+    "industry_name": "专业技术服务业",
+    "province": "北京市",
+    "city": "北京市",
+    "equity_nature": null,
+    "size_group": "小型",
+    "is_revenue": 958757046.48,
+    "is_net_profit": 183110083.73,
+    "is_total_profit": 232388929.05,
+    "bs_total_assets": 1555181769.77,
+    "rd_spend_sum": 37699515.42,
+    "rd_expense_ratio": 0.03423532697935139,
+    "rd_person": 115.0,
+    "nominal_tax_rate": 15.0,
+    "etr": 0.21205332595425547,
+    "gross_margin": 0.46724257496171095,
+    "net_margin": 0.19098694961593665,
+    "asset_liability_ratio": 0.35848019550309573,
+    "interest_debt_ratio": 0.018854211211809968,
+    "revenue_growth": 0.021733023275406715,
+    "fixed_asset_ratio": 0.01699412651545462,
+    "gov_subsidy_total": 4526789.390000001,
+    "is_income_tax": 49278845.32,
+    "cf_tax_paid": 105373633.97,
+    "employee_compensation_base": 132100796.33,
+    "bs_accounts_receivable": 223082896.43,
+    "is_hightech": null
+  },
+  "trend": {
+    "2023": {
+      "is_revenue": 938363569.19,
+      "is_total_profit": 249713501.88,
+      "is_net_profit": 200406469.73,
+      "is_income_tax": 49307032.15,
+      "rd_spend_sum": 33229752.76,
+      "rd_expense_ratio": 0.033914360611282716,
+      "asset_liability_ratio": 0.357277799916881,
+      "etr": 0.19745440986885254,
+      "nominal_tax_rate": 15.0,
+      "gov_subsidy_total": 1449166.04,
+      "bs_total_assets": 1423691560.82,
+      "cf_tax_paid": 89179589.95,
+      "gross_margin": 0.45515512612949766,
+      "finance_expense_ratio": -0.0008876145849512974,
+      "employee_compensation_base": 143890178.03,
+      "impairment_total": -22872659.990000002
+    },
+    "2024": {
+      "is_revenue": 958757046.48,
+      "is_total_profit": 232388929.05,
+      "is_net_profit": 183110083.73,
+      "is_income_tax": 49278845.32,
+      "rd_spend_sum": 37699515.42,
+      "rd_expense_ratio": 0.03423532697935139,
+      "asset_liability_ratio": 0.35848019550309573,
+      "etr": 0.21205332595425547,
+      "nominal_tax_rate": 15.0,
+      "gov_subsidy_total": 4526789.390000001,
+      "bs_total_assets": 1555181769.77,
+      "cf_tax_paid": 105373633.97,
+      "gross_margin": 0.46724257496171095,
+      "finance_expense_ratio": 0.0004986787859920814,
+      "employee_compensation_base": 132100796.33,
+      "impairment_total": -35565579.75
+    }
+  },
+  "diagnostics_summary": {
+    "关注": 0,
+    "观察": 0,
+    "提示": 0,
+    "items": []
+  },
+  "direction_summary": {
+    "recon": 20,
+    "analyzed": 5,
+    "watchlist": 1,
+    "candidates": 12,
+    "excluded": 2,
+    "recommend": 1,
+    "conditional": 4,
+    "insufficient": 0,
+    "manual_review": 0,
+    "not_recommend": 0,
+    "scenario_tax_impact_total": 19815119.45,
+    "confirmed_tax_impact_total": 1186888.03
+  },
+  "plan_index": [
+    {
+      "direction": "所得税税会差异",
+      "skill_id": "income_tax_reconciliation",
+      "decision": "有条件推荐",
+      "decision_code": "CONDITIONAL",
+      "status_key": "SCENARIO",
+      "impact_type": "SCENARIO_IMPACT",
+      "evidence_gap": false,
+      "confirmed_tax_impact": null,
+      "scenario_tax_impact": null,
+      "amount_is_estimate": true,
+      "discovery_source": "rule",
+      "fact_stats": {
+        "total": 3,
+        "present": 3,
+        "direct": 2,
+        "proxy": 1,
+        "missing": 0,
+        "data_completeness": 1.0,
+        "evidence_completeness": 0.667
+      },
+      "detail_ref": "plans/所得税税会差异.json",
+      "calculation_type": "NO_CALCULATION",
+      "policy_validity": "VALID"
+    },
+    {
+      "direction": "费用扣除",
+      "skill_id": "expense_deduction_limit",
+      "decision": "推荐",
+      "decision_code": "RECOMMEND",
+      "status_key": "CONFIRMED",
+      "impact_type": "CONFIRMED_IMPACT",
+      "evidence_gap": false,
+      "confirmed_tax_impact": 1186888.03,
+      "scenario_tax_impact": null,
+      "amount_is_estimate": true,
+      "discovery_source": "rule",
+      "fact_stats": {
+        "total": 4,
+        "present": 4,
+        "direct": 4,
+        "proxy": 0,
+        "missing": 0,
+        "data_completeness": 1.0,
+        "evidence_completeness": 1.0
+      },
+      "detail_ref": "plans/费用扣除.json",
+      "calculation_type": "INCREMENTAL_TAX_BENEFIT",
+      "policy_validity": "VALID"
+    },
+    {
+      "direction": "职工薪酬",
+      "skill_id": "employee_compensation",
+      "decision": "有条件推荐",
+      "decision_code": "CONDITIONAL",
+      "status_key": "SCENARIO",
+      "impact_type": "SCENARIO_IMPACT",
+      "evidence_gap": false,
+      "confirmed_tax_impact": null,
+      "scenario_tax_impact": 19815119.45,
+      "amount_is_estimate": true,
+      "discovery_source": "rule",
+      "fact_stats": {
+        "total": 2,
+        "present": 2,
+        "direct": 2,
+        "proxy": 0,
+        "missing": 0,
+        "data_completeness": 1.0,
+        "evidence_completeness": 1.0
+      },
+      "detail_ref": "plans/职工薪酬.json",
+      "calculation_type": "TAX_SHIELD",
+      "policy_validity": "VALID"
+    },
+    {
+      "direction": "税负现金流",
+      "skill_id": "tax_cash_flow",
+      "decision": "有条件推荐",
+      "decision_code": "CONDITIONAL",
+      "status_key": "SCENARIO",
+      "impact_type": "SCENARIO_IMPACT",
+      "evidence_gap": false,
+      "confirmed_tax_impact": null,
+      "scenario_tax_impact": null,
+      "amount_is_estimate": true,
+      "discovery_source": "rule",
+      "fact_stats": {
+        "total": 4,
+        "present": 4,
+        "direct": 1,
+        "proxy": 3,
+        "missing": 0,
+        "data_completeness": 1.0,
+        "evidence_completeness": 0.25
+      },
+      "detail_ref": "plans/税负现金流.json",
+      "calculation_type": "NO_CALCULATION",
+      "policy_validity": "VALID"
+    },
+    {
+      "direction": "应收账款",
+      "skill_id": "receivable_bad_debt",
+      "decision": "有条件推荐",
+      "decision_code": "CONDITIONAL",
+      "status_key": "SCENARIO",
+      "impact_type": "SCENARIO_IMPACT",
+      "evidence_gap": false,
+      "confirmed_tax_impact": null,
+      "scenario_tax_impact": null,
+      "amount_is_estimate": true,
+      "discovery_source": "rule",
+      "fact_stats": {
+        "total": 4,
+        "present": 4,
+        "direct": 4,
+        "proxy": 0,
+        "missing": 0,
+        "data_completeness": 1.0,
+        "evidence_completeness": 1.0
+      },
+      "detail_ref": "plans/应收账款.json",
+      "calculation_type": "NO_CALCULATION",
+      "policy_validity": "VALID"
+    }
+  ],
+  "evidence_summary": {
+    "confirmed": 13,
+    "proxy": 4,
+    "missing": 0,
+    "total": 17
+  },
+  "completeness": {
+    "data": 1.0,
+    "evidence": 0.765,
+    "by_direction": {
+      "所得税税会差异": {
+        "total": 3,
+        "present": 3,
+        "direct": 2,
+        "proxy": 1,
+        "missing": 0,
+        "data_completeness": 1.0,
+        "evidence_completeness": 0.667
+      },
+      "费用扣除": {
+        "total": 4,
+        "present": 4,
+        "direct": 4,
+        "proxy": 0,
+        "missing": 0,
+        "data_completeness": 1.0,
+        "evidence_completeness": 1.0
+      },
+      "职工薪酬": {
+        "total": 2,
+        "present": 2,
+        "direct": 2,
+        "proxy": 0,
+        "missing": 0,
+        "data_completeness": 1.0,
+        "evidence_completeness": 1.0
+      },
+      "税负现金流": {
+        "total": 4,
+        "present": 4,
+        "direct": 1,
+        "proxy": 3,
+        "missing": 0,
+        "data_completeness": 1.0,
+        "evidence_completeness": 0.25
+      },
+      "应收账款": {
+        "total": 4,
+        "present": 4,
+        "direct": 4,
+        "proxy": 0,
+        "missing": 0,
+        "data_completeness": 1.0,
+        "evidence_completeness": 1.0
+      }
+    }
+  },
+  "artifact_refs": {
+    "opportunities": "opportunities.json",
+    "diagnostics": "diagnostics.json",
+    "plans": "plans/"
+  }
+}

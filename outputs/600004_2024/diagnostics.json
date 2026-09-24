@@ -1,0 +1,67 @@
+{
+  "items": [
+    {
+      "id": "rou_depreciation",
+      "name": "使用权资产与本期减少偏低（待核实）",
+      "category": "estimate",
+      "direction": "租赁",
+      "kind": "observation",
+      "statement": "使用权资产与本期减少偏低（待核实）：存量 15,954,005,662 元，本期流量 892,015 元，按基准比例 5% 推算应约 797,700,283 元（偏差 99.9%）；该字段含处置/转出，非纯折旧，仅作观察、需以租赁附注核实",
+      "fields": [],
+      "expected": 797700283.1240001,
+      "actual": 892015.04,
+      "deviation": 0.9989,
+      "severity": "提示",
+      "evidence_strength": "中",
+      "gate": false,
+      "note": "推算类·提示",
+      "evidence_needed": [
+        "租赁合同与租赁期",
+        "使用权资产折旧与租赁负债利息计算表",
+        "税会差异台账"
+      ],
+      "category_cn": "推算类"
+    },
+    {
+      "id": "interest",
+      "name": "利息支出与推算值差异",
+      "category": "estimate",
+      "direction": "融资筹划",
+      "kind": "observation",
+      "statement": "利息支出（109,661,555）与有息负债×基准利率（16,086,261）差异 85.3%",
+      "fields": [],
+      "expected": 16086260.687,
+      "actual": 109661554.69,
+      "deviation": 0.8533,
+      "severity": "观察",
+      "evidence_strength": "中",
+      "gate": true,
+      "note": "推算类·观察",
+      "evidence_needed": [
+        "关联方借款明细",
+        "同期同类贷款利率证明"
+      ],
+      "category_cn": "推算类"
+    },
+    {
+      "id": "cashflow",
+      "name": "经营现金流与净利润+折旧差异",
+      "category": "estimate",
+      "direction": "税负现金流",
+      "kind": "observation",
+      "statement": "经营现金流净额（3,410,126,652）与净利润+折旧（965,752,960）差异 71.7%",
+      "fields": [],
+      "expected": 965752959.58,
+      "actual": 3410126652.46,
+      "deviation": 0.7168,
+      "severity": "提示",
+      "evidence_strength": "中",
+      "gate": true,
+      "note": "推算类·提示",
+      "evidence_needed": [
+        "现金流量表附注"
+      ],
+      "category_cn": "推算类"
+    }
+  ]
+}

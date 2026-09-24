@@ -1,0 +1,82 @@
+{
+  "analyses": [
+    {
+      "stock_code": "000063",
+      "year": 2024,
+      "name": "中兴通讯",
+      "industry": "计算机、通信和其他电子设备制造业",
+      "generated_at": "2026-09-21 21:18:52",
+      "analyzed": 5,
+      "conditional": 5,
+      "insufficient": 0,
+      "recommend": 0,
+      "brief": "提示：使用权资产与本期减少偏低（待核实）；研发筹划：有条件推荐（情景测算 344,253.85 万元）",
+      "result_ref": "000063_2024/result.json"
+    },
+    {
+      "stock_code": "300778",
+      "year": 2024,
+      "name": "新城市",
+      "industry": "专业技术服务业",
+      "generated_at": "2026-09-21 21:13:02",
+      "analyzed": 5,
+      "conditional": 3,
+      "insufficient": 1,
+      "recommend": 1,
+      "brief": "关注：应收账款占比偏离基准；费用扣除：推荐（确认影响 7.69 万元）",
+      "result_ref": "300778_2024/result.json"
+    },
+    {
+      "stock_code": "600004",
+      "year": 2021,
+      "name": "白云机场",
+      "industry": "航空运输业",
+      "generated_at": "2026-09-21 20:20:16",
+      "analyzed": 5,
+      "conditional": 3,
+      "insufficient": 2,
+      "recommend": 0,
+      "brief": "观察：实际税率同比突变；融资筹划：有条件推荐",
+      "result_ref": "600004_2021/result.json"
+    },
+    {
+      "stock_code": "600004",
+      "year": 2024,
+      "name": "白云机场",
+      "industry": "航空运输业",
+      "generated_at": "2026-09-21 20:07:44",
+      "analyzed": 5,
+      "conditional": 4,
+      "insufficient": 1,
+      "recommend": 0,
+      "brief": "观察：利息支出与推算值差异；资产筹划：有条件推荐（情景测算 5,815.57 万元）",
+      "result_ref": "600004_2024/result.json"
+    },
+    {
+      "stock_code": "603018",
+      "year": 2024,
+      "name": "华设集团",
+      "industry": "专业技术服务业",
+      "generated_at": "2026-09-22 00:09:46",
+      "analyzed": 5,
+      "conditional": 4,
+      "insufficient": 0,
+      "recommend": 1,
+      "brief": "关注：应收账款占比偏离基准；费用扣除：推荐（确认影响 954.44 万元）",
+      "result_ref": "603018_2024/result.json"
+    },
+    {
+      "stock_code": "920208",
+      "year": 2024,
+      "name": "青矩技术",
+      "industry": "专业技术服务业",
+      "generated_at": "2026-09-21 21:07:36",
+      "analyzed": 5,
+      "conditional": 4,
+      "insufficient": 0,
+      "recommend": 1,
+      "brief": "费用扣除：推荐（确认影响 118.69 万元）",
+      "result_ref": "920208_2024/result.json"
+    }
+  ]
+}

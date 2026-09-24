@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-09-21 21:07:36",
+  "stock_code": "920208",
+  "year": 2024,
+  "name": "青矩技术",
+  "llm_model": "deepseek-chat",
+  "llm_source": "llm",
+  "rag_backend": "embedding",
+  "hybrid": true,
+  "top_k": 8,
+  "case_top_k": 3,
+  "candidates": 40,
+  "evidence_review_rounds": 2,
+  "early_stop": true,
+  "direction_funnel": {
+    "recon": 20,
+    "analyzed": 5,
+    "excluded": 2,
+    "recommend": 1,
+    "conditional": 4
+  },
+  "pool_summaries": [
+    {
+      "direction": "所得税税会差异",
+      "company_facts": 4,
+      "related_fields": 5,
+      "policies": 4,
+      "cases": 5
+    },
+    {
+      "direction": "费用扣除",
+      "company_facts": 5,
+      "related_fields": 8,
+      "policies": 12,
+      "cases": 6
+    },
+    {
+      "direction": "职工薪酬",
+      "company_facts": 5,
+      "related_fields": 9,
+      "policies": 14,
+      "cases": 9
+    },
+    {
+      "direction": "税负现金流",
+      "company_facts": 4,
+      "related_fields": 5,
+      "policies": 8,
+      "cases": 7
+    },
+    {
+      "direction": "应收账款",
+      "company_facts": 2,
+      "related_fields": 7,
+      "policies": 13,
+      "cases": 6
+    }
+  ]
+}

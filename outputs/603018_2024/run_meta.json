@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-09-22 00:09:46",
+  "stock_code": "603018",
+  "year": 2024,
+  "name": "华设集团",
+  "llm_model": "deepseek-chat",
+  "llm_source": "llm",
+  "rag_backend": "embedding",
+  "hybrid": true,
+  "top_k": 8,
+  "case_top_k": 3,
+  "candidates": 40,
+  "evidence_review_rounds": 2,
+  "early_stop": true,
+  "direction_funnel": {
+    "recon": 19,
+    "analyzed": 5,
+    "excluded": 2,
+    "recommend": 1,
+    "conditional": 4
+  },
+  "pool_summaries": [
+    {
+      "direction": "应收账款",
+      "company_facts": 2,
+      "related_fields": 7,
+      "policies": 14,
+      "cases": 6
+    },
+    {
+      "direction": "研发筹划",
+      "company_facts": 9,
+      "related_fields": 17,
+      "policies": 15,
+      "cases": 6
+    },
+    {
+      "direction": "职工薪酬",
+      "company_facts": 2,
+      "related_fields": 6,
+      "policies": 14,
+      "cases": 8
+    },
+    {
+      "direction": "租赁",
+      "company_facts": 3,
+      "related_fields": 7,
+      "policies": 13,
+      "cases": 6
+    },
+    {
+      "direction": "费用扣除",
+      "company_facts": 5,
+      "related_fields": 8,
+      "policies": 11,
+      "cases": 6
+    }
+  ]
+}
