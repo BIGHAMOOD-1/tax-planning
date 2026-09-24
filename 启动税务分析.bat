@@ -10,23 +10,19 @@ echo ============================================
 where python >nul 2>&1
 if errorlevel 1 ( echo [错误] 未找到 python，请先安装 Python 3.11 并加入 PATH。 & pause & exit /b 1 )
 
-if not exist "frontend\dist\index.html" (
-  echo [1/3] 首次运行：安装并构建前端（需要 Node/npm，约 1-2 分钟）...
-  pushd frontend
+echo [1/3] 构建前端（确保页面为最新版本）...
+pushd frontend
+if not exist "node_modules" (
+  echo   首次运行：安装前端依赖（约 1-2 分钟）...
   call npm install || ( echo [错误] npm install 失败 & popd & pause & exit /b 1 )
-  call npm run build || ( echo [错误] npm run build 失败 & popd & pause & exit /b 1 )
-  popd
-) else (
-  echo [1/3] 前端已构建，跳过。
 )
+call npm run build || ( echo [错误] npm run build 失败 & popd & pause & exit /b 1 )
+popd
 
-netstat -ano | findstr ":8000" | findstr "LISTENING" >nul
-if not errorlevel 1 (
-  echo [2/3] 服务已在运行（:8000）。
-  goto open
+echo [2/3] 启动后端服务（若旧服务在运行会先停止）...
+for /f "tokens=5" %%p in ('netstat -ano ^| findstr ":8000" ^| findstr "LISTENING"') do (
+  taskkill /f /pid %%p >nul 2>&1
 )
-
-echo [2/3] 启动后端服务...
 start "智能税务筹划服务" /min python run_server.py
 
 set /a tries=0
